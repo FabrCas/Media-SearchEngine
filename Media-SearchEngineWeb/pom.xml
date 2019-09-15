@@ -25,7 +25,7 @@
 		<artifactId>spring-boot-starter-web</artifactId>
 	</dependency>
 	
-	<!-- start of lucene API's -->
+	<!-- start of lucene's APIs -->
 	
 	<dependency>
 		<groupId>org.apache.lucene</groupId>
@@ -51,8 +51,19 @@
     <version>8.2.0</version>
 </dependency>
 	
-	<!-- finish of lucene API's -->
+	<!-- finish of lucene's APIs -->
 	
+	<!-- start utility libs  -->
+	
+	<dependency>
+		<groupId>com.googlecode.json-simple</groupId>
+		<artifactId>json-simple</artifactId>
+		<version>1.1.1</version>
+	</dependency>
+	
+	<!-- end utility libs -->
+	
+	<!-- Spring's APIs -->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-tomcat</artifactId>
