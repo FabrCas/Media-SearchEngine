@@ -18,8 +18,9 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-
 import org.springframework.stereotype.Component;
+
+import it.uniroma3.IR.model.Pagina;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,11 +39,18 @@ public class Indicizzatore {
 	/*lucene's objects*/
     private Analyzer analyzer;
 	private IndexWriterConfig iwc;
-    private IndexWriter writer ; 
+    private IndexWriter writer ;
+    
+    /*L'analizzatore identifica in modo univoco i documenti che analizza*/
+    private Long id;
+    
+    /*utilità*/
+    private ElaboraJSON elaboratore;
 	
     public Indicizzatore() {
     	try {
-    		
+    		this.id=0L;
+    		this.elaboratore= new ElaboraJSON();
     		//istanza di org.apache.lucene.store.Directory
 			this.dirIndexedFiles= FSDirectory.open(Paths.get(INDEX_DIR));
 			//analizzatore con le stop word di default 
@@ -58,33 +66,30 @@ public class Indicizzatore {
 		}
     }
     
-    //metodo che elabora i file .json nella direcory "inputFiles"
-    public void indicizzaCartella() {
+    //metodo che elabora i file .json nella direcory "inputFiles" e ritorna la classe per gestire la risposta
+    public void indicizzaCartella(CreaRisultati creaRisultati) {
     	File file= new File(INPUT_DIR); //folder
     	File[] fileArray = file.listFiles(); //array of json files
+    	
     	//oggetto json parser per analizzare il file
-
     	JSONParser jsonParser= new JSONParser();
     	FileReader reader;
-    	/*BufferedReader bufReader;
-    	String line;*/
     	for(File f: fileArray) {
     		try {
-    			//System.out.println("--------------------------------------------\n");
+    			this.elaboratore= new ElaboraJSON();
 				reader= new FileReader(f);
-				/*bufReader = new BufferedReader(reader);
-	    		
-	    		line= bufReader.readLine();
-	    		while (line!=null) {
-	    			System.out.println(line);
-	    			line= bufReader.readLine();}*/
-	    			
-	    		
-				JSONObject jonj= (JSONObject)jsonParser.parse(reader);
+				JSONObject jonb= (JSONObject)jsonParser.parse(reader);
+				String nomeFile= (String) jonb.get("file-name");
+				System.out.println("Sto caricando il file: "+ nomeFile + " ...");
+				JSONArray jArray= (JSONArray) jonb.get("words");
 				
-				System.out.println("Sto caricando il file: "+ jonj.get("file-name") + " ...");
+				System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
+				String contenuto= this.elaboratore.getContenuto(jArray);
 				
-				
+				this.indicizzaDocumento(nomeFile, contenuto, this.id);
+				Pagina pagina= new Pagina(this.id,this.elaboratore.getMappaParolaPosizione());
+				creaRisultati.aggiungiPagina(pagina);
+				id++;
 				reader.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -98,29 +103,23 @@ public class Indicizzatore {
 			}
     		
     	}
-    	
-    	
-    	
-    	
     }
     
     
-    public void indicizzaDocumento(String titolo, String corpo, File file ) {
+    public void indicizzaDocumento(String titolo, String corpo, Long id) {
         try {
         	//creazione di un documento di Lucene
             Document document = new Document();
-
             document.add(new StringField("title", titolo, Field.Store.YES));
             document.add(new TextField("contents", corpo, Field.Store.YES));
-            document.add(new StringField("path", file.toString(), Field.Store.YES));
-
+            document.add(new StringField("id",id.toString() , Field.Store.YES));
+            
             writer.addDocument(document);
             writer.commit();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
     
 	
 }
