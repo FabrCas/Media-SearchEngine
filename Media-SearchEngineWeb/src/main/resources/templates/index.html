@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+<title>IRS</title>
+<link rel="stylesheet" href=css/layout.css >
+</head>
+<body>
+<p> Motore di ricerca testuale
+</p>
+
+<h2>
+Premi sotto per indicizzare i documenti (Cancellare i vecchi indexed files prima)
+</h2>
+<form id="indexing" th:action="@{/toIndex}" method="POST">
+<input type="submit" name="index" value="procedi"/>
+</form>
+<br>
+<form id="search_form" th:action="@{/toFind}" method="POST">
+	<label>Ricerca <input id="search_input" size="30" name="search_input" /></label>
+</form>
+
+</body>
+</html>

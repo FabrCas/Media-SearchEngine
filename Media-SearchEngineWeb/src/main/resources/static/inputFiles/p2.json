@@ -1,0 +1,21 @@
+{
+  "file-name":"p2.jpg",
+  "words": [
+    {
+      "area":{"x": 131, "y":87, "w": 339, "h": 167},
+      "trascriptions":["casa", "accasato"]
+    },
+    {
+      "area":{"x": 1111, "y":82, "w": 369, "h": 152  },
+      "trascriptions":["porta", "portone", "porticina"]
+    },
+    {
+      "area":{"x": 103, "y":525, "w": 398, "h": 163},
+      "trascriptions":["verso"]
+    },
+    {
+      "area":{"x": 58, "y":951, "w": 380, "h": 164},
+      "trascriptions":["piatto", "piatti"]
+    }
+  ]
+}
