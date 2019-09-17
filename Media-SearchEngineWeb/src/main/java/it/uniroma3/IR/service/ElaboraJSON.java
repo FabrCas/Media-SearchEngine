@@ -1,6 +1,8 @@
 package it.uniroma3.IR.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -9,10 +11,10 @@ import org.json.simple.JSONObject;
 import it.uniroma3.IR.model.Coordinate;
 
 public class ElaboraJSON {
-	private Map<String,Coordinate> parolaPosizione;
+	private Map<String,List<Coordinate>> parolaPosizione;
 	
 	public ElaboraJSON() {
-		this.parolaPosizione= new HashMap<String,Coordinate>();
+		this.parolaPosizione= new HashMap<String,List<Coordinate>>();
 		
 	}
 
@@ -30,7 +32,7 @@ public class ElaboraJSON {
     			this.aggiungiValoreMappa(nome, posizione);
     		}
     	}
-		return risultato;	
+    	return risultato;	
     }
 
     private  void aggiungiValoreMappa (String nome, JSONObject pos) {
@@ -38,11 +40,19 @@ public class ElaboraJSON {
     	Long y= (Long) pos.get("y");
     	Long width= (Long) pos.get("w");
     	Long height= (Long) pos.get("h");
-    	Coordinate cordinatinate= new Coordinate(x, y, width, height);
-    	this.parolaPosizione.put(nome, cordinatinate);	
-   }
-    
-    public Map<String,Coordinate> getMappaParolaPosizione() {
+    	Coordinate coordinate= new Coordinate(x, y, width, height);
+    	List<Coordinate> coordinatePresenti;
+    	if (this.parolaPosizione.containsKey(nome)) {
+    		coordinatePresenti= this.parolaPosizione.get(nome);
+    	}
+    	else {
+    		coordinatePresenti= new ArrayList<Coordinate>();
+    	}
+    	coordinatePresenti.add(coordinate);
+    	this.parolaPosizione.put(nome, coordinatePresenti);	
+    }
+
+    public Map<String, List<Coordinate>> getMappaParolaPosizione() {
     	return this.parolaPosizione;
     }
 }

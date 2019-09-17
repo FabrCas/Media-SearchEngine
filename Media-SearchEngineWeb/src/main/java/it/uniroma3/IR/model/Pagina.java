@@ -1,13 +1,14 @@
 package it.uniroma3.IR.model;
 
+import java.util.List;
 import java.util.Map;
 
 public class Pagina {
 	
 	private Long id;
-	private Map<String,Coordinate> mappaturaParole;
+	private Map<String,List<Coordinate>> mappaturaParole;
 	
-	public Pagina(Long id, Map<String, Coordinate> mappaturaParola) {
+	public Pagina(Long id, Map<String, List<Coordinate>> mappaturaParola) {
 		this.id = id;
 		this.mappaturaParole = mappaturaParola;
 	}
@@ -18,10 +19,10 @@ public class Pagina {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Map<String, Coordinate> getMappaturaParola() {
+	public Map<String, List<Coordinate>> getMappaturaParola() {
 		return mappaturaParole;
 	}
-	public void setMappaturaParola(Map<String, Coordinate> mappaturaParola) {
+	public void setMappaturaParola(Map<String, List<Coordinate>> mappaturaParola) {
 		this.mappaturaParole = mappaturaParola;
 	}
 	
