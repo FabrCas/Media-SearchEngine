@@ -18,11 +18,19 @@ public class MainController {
 	@Autowired
 	private CreaRisultati creaRisultati;
 	
+	@RequestMapping(value="/toIndex", method= RequestMethod.POST)
+	public void toIndex() {
+		System.out.println("indicizzazione...\n");
+		this.indicizzatore.indicizzaCartella(creaRisultati);
+	}
+	
+	
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String index(Model model) {
 		
-		this.indicizzatore.indicizzaCartella(creaRisultati);
 		return "searchPage.html";
 	}
+	
+	
 
 }
