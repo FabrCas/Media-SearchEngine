@@ -20,7 +20,6 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.stereotype.Component;
 
-import it.uniroma3.IR.model.Pagina;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -87,8 +86,6 @@ public class Indicizzatore {
 				String contenuto= this.elaboratore.getContenuto(jArray);
 				
 				this.indicizzaDocumento(nomeFile, contenuto, this.id);
-				Pagina pagina= new Pagina(this.id,this.elaboratore.getMappaParolaPosizione());
-				creaRisultati.aggiungiPagina(pagina);
 				id++;
 				reader.close();
 			} catch (FileNotFoundException e) {

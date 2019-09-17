@@ -6,17 +6,7 @@
 <title>IRS</title>
 <link rel="stylesheet" href=css/layout.css >
 
-<script src="https://code.jquery.com/jquery-latest.min.js">
-function indicizza(){
-$.ajax({ type: "post",
-	url: "/toIndex",
-	success: function (responsedata) {
-		document.getElementById(1).innerHTML="Indicizzazione completata!";
-		} 
-		});
-}
 
-</script>
 </head>
 <body>
 <p> Motore di ricerca:
@@ -38,6 +28,16 @@ Premi sotto per indicizzare i documenti (Cancellare i vecchi indexed files prima
 	<label>Ricerca <input id="search_input" size="30" name="search_input" /></label>
 </form>
 
+<script src="webjars/jquery/1.9.1/jquery.min.js">
+function indicizza(){
+$.ajax({ type: "post",
+	url: "/toIndex",
+	success: function (responsedata) {
+		document.getElementById(1).innerHTML="Indicizzazione completata!";
+		} 
+		});
+}
+</script>
 
 </body>
 </html>
