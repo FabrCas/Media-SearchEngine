@@ -1,4 +1,4 @@
-package it.uniroma3.IR.service;
+package it.uniroma3.IR.service; 
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,9 +41,10 @@ public class CreaRisultati {
 			try {
 				risultatoParziale= new RisultatoDoc();
 				Document d= this.searcher.doc(score.doc);
-				risultatoParziale.setTitolo(getNomeDocumento(d.get("title")));
+				String nomeFile= d.get("title");
+				risultatoParziale.setFile(nomeFile);
+				risultatoParziale.setTitolo(getNomeDocumento(nomeFile));
 				risultatoParziale.setScore(modficaScore((score.toString())));
-				risultatoParziale.setnomeFile(getPagina(d.get("title")));
 				messaggioRicerca.add(risultatoParziale);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -54,16 +55,16 @@ public class CreaRisultati {
 	
 	private String getNomeDocumento(String titolo) {   //ovvero senza il .txt
 		String nomeDocumento;
-		nomeDocumento= titolo.replace(".json", "");
+		nomeDocumento= titolo.replace(".jpg", "");
 		System.out.println(nomeDocumento);
 		return nomeDocumento;
 	}
 	
-	private String getPagina(String nomeFile) {
-		String nomePagina;
-		nomePagina= nomeFile.replace(".json", ".jpg");
-		return nomePagina;
-	}
+//	private String getPagina(String nomeFile) {
+//		String nomePagina;
+//		nomePagina= nomeFile.replace(".json", ".jpg");
+//		return nomePagina;
+//	}
 	
 	private String modficaScore(String score) {
 		String scoreMod="";

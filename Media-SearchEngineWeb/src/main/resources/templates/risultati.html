@@ -10,11 +10,16 @@
 	<span th:text="${hits}" onload="log()"></span>
 	<ul style="list-style-type: none;">
 		<!-- finch� c'� un prof stampa una lista puntata -->
-		<li th:each="risultatoDoc,iterationStatus  : ${listaRisultati}">
+		<li th:each="risultatoDoc, stat: ${listaRisultati}">
 			<h4>
-				<span id="nome" onclick="apri()" th:text="${risultatoDoc.titolo}" onmouseover="cambiaColoreSopra()"
-				onmouseout="cambiaColorefuori()"></span>
-				<span th:text="${risultatoDoc.score}"> Score </span>
+				<span th:id="${stat.index}"
+				    th:title="${risultatoDoc.file}"
+					onclick="apri(this.title)"
+					th:text="${risultatoDoc.titolo}"
+					onmouseover="cambiaColoreSopra(this.id)"
+					onmouseout="cambiaColorefuori(this.id)"></span> 
+					
+					<span th:text="${risultatoDoc.score}"> Score </span>
 			</h4>
 		<li>
 	</ul>
@@ -24,21 +29,21 @@
 	</div>
 
 	<script th:inline="javascript">
-	function cambiaColoreSopra(){
-		  document.getElementById("nome").style.color="red";
+	function cambiaColoreSopra(id){
+		console.log("cambio colore: " + id);
+		  document.getElementById(id).style.color="Cyan"; 	  
 		}
 	
-	function cambiaColorefuori(){
-		  document.getElementById("nome").style.color="black";
+	function cambiaColorefuori(id){
+		console.log("cambio colore: " + id);
+		document.getElementById(id).style.color="black"; 	
 		}
 	
-	function apri(){
-		window.open("/documents/p1.jpg", "_blank");
+	function apri(nomeFile){
+		console.log(nomeFile);
+		window.open("/documents/"+nomeFile , "_blank");
 	}
-
 	</script>
-
-
-
+	
 </body>
 </html>

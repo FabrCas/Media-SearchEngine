@@ -4,7 +4,7 @@ public class RisultatoDoc {
 	
 	private String titolo;
 	private String score;
-	private String nomeFile;
+	private String file;
 	
 	public RisultatoDoc() {
 	}
@@ -25,12 +25,12 @@ public class RisultatoDoc {
 		this.score = score;
 	}
 
-	public String getnomeFile() {
-		return nomeFile;
+	public String getFile() {
+		return file;
 	}
 
-	public void setnomeFile(String paginahtml) {
-		this.nomeFile = paginahtml;
+	public void setFile(String nomeFile) {
+		this.file = nomeFile;
 	}
-
+	
 }
