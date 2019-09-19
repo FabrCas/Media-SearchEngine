@@ -43,7 +43,7 @@ public class CreaRisultati {
 				Document d= this.searcher.doc(score.doc);
 				risultatoParziale.setTitolo(getNomeDocumento(d.get("title")));
 				risultatoParziale.setScore(modficaScore((score.toString())));
-				risultatoParziale.setPaginahtml(getPagina(d.get("title")));
+				risultatoParziale.setnomeFile(getPagina(d.get("title")));
 				messaggioRicerca.add(risultatoParziale);
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -25,11 +25,11 @@ public class RisultatoDoc {
 		this.score = score;
 	}
 
-	public String getPaginahtml() {
+	public String getnomeFile() {
 		return nomeFile;
 	}
 
-	public void setPaginahtml(String paginahtml) {
+	public void setnomeFile(String paginahtml) {
 		this.nomeFile = paginahtml;
 	}
 

@@ -7,12 +7,13 @@
 </head>
 <body>
 	<h1>Risultati della ricerca:</h1>
-	<span th:text="${hits}"></span>
+	<span th:text="${hits}" onload="log()"></span>
 	<ul style="list-style-type: none;">
 		<!-- finch� c'� un prof stampa una lista puntata -->
-		<li th:each="risultatoDoc: ${listaRisultati}">
+		<li th:each="risultatoDoc,iterationStatus  : ${listaRisultati}">
 			<h4>
-				<span th:text="${risultatoDoc.titolo}"></span>
+				<span id="nome" onclick="apri()" th:text="${risultatoDoc.titolo}" onmouseover="cambiaColoreSopra()"
+				onmouseout="cambiaColorefuori()"></span>
 				<span th:text="${risultatoDoc.score}"> Score </span>
 			</h4>
 		<li>
@@ -21,5 +22,23 @@
 		<h1>Ritorna alla home:</h1>
 		<a href="/home"> home </a>
 	</div>
+
+	<script th:inline="javascript">
+	function cambiaColoreSopra(){
+		  document.getElementById("nome").style.color="red";
+		}
+	
+	function cambiaColorefuori(){
+		  document.getElementById("nome").style.color="black";
+		}
+	
+	function apri(){
+		window.open("/documents/p1.jpg", "_blank");
+	}
+
+	</script>
+
+
+
 </body>
 </html>
