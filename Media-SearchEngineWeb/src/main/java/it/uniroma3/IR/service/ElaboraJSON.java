@@ -24,8 +24,8 @@ public class ElaboraJSON {
     		//System.out.println(trascrizioni.toString());
     		for(Object x: trascrizioni) {
     			String nome= (String) x;
-    			risultato.concat(nome);
-    			risultato.concat(" ");
+    			risultato+=(nome);
+    			risultato+=(" ");
     		}
     	}
     	return risultato;	

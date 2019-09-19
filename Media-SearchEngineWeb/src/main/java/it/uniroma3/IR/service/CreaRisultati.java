@@ -9,7 +9,6 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
-import org.springframework.stereotype.Component;
 
 import it.uniroma3.IR.model.RisultatoDoc;
 
@@ -74,7 +73,6 @@ public class CreaRisultati {
 		if(scanner.hasNext())
 			scoreMod=scoreMod + scanner.next();
 		scanner.close();
-		
 		return scoreMod;
 	}
 }

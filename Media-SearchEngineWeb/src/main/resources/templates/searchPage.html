@@ -17,27 +17,22 @@ Premi sotto per indicizzare i documenti (Cancellare i vecchi indexed files prima
 </h2>
 <!-- <form id="indexing" th:action="@{/toIndex}" method="POST"> -->
 
-<button type=button id="btn1" onclick="indicizza()">Procedi</button>
 
+<br>
 <div id="1">
+<form id="indexing" th:action="@{/Indexing}" method="POST">
+<input type="submit" name="index" value="procedi"/>
+</form>
 </div>
 
+<br>
 
 <br>
 <form id="search_form" th:action="@{/toFind}" method="POST">
 	<label>Ricerca <input id="search_input" size="30" name="search_input" /></label>
 </form>
 
-<script src="webjars/jquery/1.9.1/jquery.min.js">
-function indicizza(){
-$.ajax({ type: "post",
-	url: "/toIndex",
-	success: function (responsedata) {
-		document.getElementById(1).innerHTML="Indicizzazione completata!";
-		} 
-		});
-}
-</script>
+
 
 </body>
 </html>

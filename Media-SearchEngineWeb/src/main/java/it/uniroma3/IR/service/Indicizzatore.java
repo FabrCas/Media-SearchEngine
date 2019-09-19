@@ -79,11 +79,12 @@ public class Indicizzatore {
 				reader= new FileReader(f);
 				JSONObject jonb= (JSONObject)jsonParser.parse(reader);
 				String nomeFile= (String) jonb.get("file-name");
-				System.out.println("Sto caricando il file: "+ nomeFile + " ...");
+				//System.out.println("Sto caricando il file: "+ nomeFile + " ...");
 				JSONArray jArray= (JSONArray) jonb.get("words");
 				
-				System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
+				//System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
 				String contenuto= this.elaboratore.getContenuto(jArray);
+				System.out.println("il contenuto del documento con id: " + id + "\n" + contenuto);
 				
 				this.indicizzaDocumento(nomeFile, contenuto, this.id);
 				id++;
