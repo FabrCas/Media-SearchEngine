@@ -66,7 +66,7 @@ public class Indicizzatore {
     }
     
     //metodo che elabora i file .json nella direcory "inputFiles" e ritorna la classe per gestire la risposta
-    public void indicizzaCartella(CreaRisultati creaRisultati) {
+    public void indicizzaCartella() {
     	File file= new File(INPUT_DIR); //folder
     	File[] fileArray = file.listFiles(); //array of json files
     	

@@ -1,17 +1,17 @@
 package it.uniroma3.IR.service;
 
+/*
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import it.uniroma3.IR.model.Coordinate;
+import java.util.Map;*/
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import it.uniroma3.IR.model.Coordinate;
-
 public class ElaboraJSON {
-	private Map<String,List<Coordinate>> parolaPosizione;
+	//private Map<String,List<Coordinate>> parolaPosizione;
 	
 	public ElaboraJSON() {
 	}
@@ -31,7 +31,7 @@ public class ElaboraJSON {
     	return risultato;	
     }
 
-    //da utilizzare
+    /*da utilizzare
     private Map<String,List<Coordinate>> aggiungiValoreMappa (JSONArray array) {
 		this.parolaPosizione= new HashMap<String,List<Coordinate>>();
     	for(int i=0; i< array.size(); i++) {
@@ -58,5 +58,5 @@ public class ElaboraJSON {
     		}
     	}
     	 return parolaPosizione;
-    }
+    }   */
 }
