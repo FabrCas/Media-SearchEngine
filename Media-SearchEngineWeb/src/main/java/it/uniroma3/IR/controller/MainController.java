@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
@@ -25,32 +26,43 @@ public class MainController {
 	private Interrogatore interrogatore;
 
 	//indicizzazione
-	@RequestMapping(value="/Indexing", method= RequestMethod.POST)
+	@RequestMapping(value="/Indexing")
+	@ResponseBody
 	public String toIndex() {
 		System.out.println("indicizzazione...\n");
 		this.indicizzatore.indicizzaCartella();
-		return "searchPage.html"; //per prova, da implementare con js
+		return "Indicizzazione completata! \nSono stati indicizzati "+ this.indicizzatore.getCounterDocsIndexed()
+		+ " documenti."; 
 	}
 	
+	
+//	@RequestMapping("/prova")
+//	@ResponseBody
+//	public String stampa() {
+//		String stringa= "Print try";
+//		System.out.println(stringa);
+//		return stringa;
+//	}
+	 
 	//interrogazione
 	@RequestMapping(value="/toFind", method= RequestMethod.POST)
 	public String toFind(@RequestParam("search_input") String ricerca, Model model) throws Exception{
 		this.interrogatore.ricercaFuzzy(ricerca);
 		if(this.interrogatore.isValida()) {
-		CreaRisultati risultati= this.interrogatore.getRisultati();
-		List<RisultatoDoc> listaRisultati=risultati.risultatiDocumenti();
-		for(RisultatoDoc ris: listaRisultati) {
-			System.out.println(ris.getTitolo());
-		}
-		model.addAttribute("listaRisultati", listaRisultati);
-		model.addAttribute("hits",risultati.totaleHits());
-		return "risultati.html";
+			CreaRisultati risultati= this.interrogatore.getRisultati();
+			List<RisultatoDoc> listaRisultati=risultati.risultatiDocumenti();
+			for(RisultatoDoc ris: listaRisultati) {
+				System.out.println(ris.getTitolo());
+			}
+			model.addAttribute("listaRisultati", listaRisultati);
+			model.addAttribute("hits",risultati.totaleHits());
+			return "risultati.html";
 		}
 		else {
 			return "searchPage.html";
 		}
 	}
-	
+
 	
 	
 	@RequestMapping(value = { "/", "/index"})

@@ -11,18 +11,14 @@
 <body>
 <p> Motore di ricerca:
 </p>
-
+<div id="1">
 <h2>
-Premi sotto per indicizzare i documenti (Cancellare i vecchi indexed files prima)
+Premi sotto per indicizzare i documenti
 </h2>
 <!-- <form id="indexing" th:action="@{/toIndex}" method="POST"> -->
 
 
-<br>
-<div id="1">
-<form id="indexing" th:action="@{/Indexing}" method="POST">
-<input type="submit" name="index" value="procedi"/>
-</form>
+<button type="button" id="indexB">Indicizza</button>
 </div>
 
 <br>
@@ -32,7 +28,10 @@ Premi sotto per indicizzare i documenti (Cancellare i vecchi indexed files prima
 	<label>Ricerca <input id="search_input" size="30" name="search_input" /></label>
 </form>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/javaScript/startIndexing.js">
 
+</script>
 
 </body>
 </html>

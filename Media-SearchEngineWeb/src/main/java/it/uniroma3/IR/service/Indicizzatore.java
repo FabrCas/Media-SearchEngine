@@ -39,8 +39,9 @@ public class Indicizzatore {
     private Analyzer analyzer;
 	private IndexWriterConfig iwc;
     private IndexWriter writer ;
+    private int counterDocsIndexed;
     
-    /*L'analizzatore identifica in modo univoco i documenti che analizza*/
+	/*L'analizzatore identifica in modo univoco i documenti che analizza*/
     private Long id;
     
     /*utilità*/
@@ -59,7 +60,7 @@ public class Indicizzatore {
 			this.iwc.setOpenMode(OpenMode.CREATE);                              //Creates a new index if one does not exist, otherwise it opens the index and documents will be appended.
 			//l'indexWriter, scrive nuovi index file per la cartella "static/indexedFiles"
 			this.writer= new IndexWriter(dirIndexedFiles, iwc);
-			
+			this.counterDocsIndexed=0;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -88,6 +89,7 @@ public class Indicizzatore {
 				
 				this.indicizzaDocumento(nomeFile, contenuto, this.id);
 				id++;
+				this.counterDocsIndexed++;
 				reader.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -119,5 +121,7 @@ public class Indicizzatore {
         }
     }
     
-	
+    public int getCounterDocsIndexed() {
+		return counterDocsIndexed;
+	}
 }

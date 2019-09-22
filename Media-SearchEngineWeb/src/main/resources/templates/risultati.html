@@ -28,22 +28,8 @@
 		<a href="/home"> home </a>
 	</div>
 
-	<script th:inline="javascript">
-	function cambiaColoreSopra(id){
-		console.log("cambio colore: " + id);
-		  document.getElementById(id).style.color="Cyan"; 	  
-		}
-	
-	function cambiaColorefuori(id){
-		console.log("cambio colore: " + id);
-		document.getElementById(id).style.color="black"; 	
-		}
-	
-	function apri(nomeFile){
-		console.log(nomeFile);
-		window.open("/documents/"+nomeFile , "_blank");
-	}
+	<script type="text/javascript" th:inline="javascript" src="/javaScript/apriMedia.js"></script>	
+	<script>
 	</script>
-	
 </body>
 </html>
