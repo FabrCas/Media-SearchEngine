@@ -36,6 +36,7 @@ public class MainController {
 	@RequestMapping(value="/toFind", method= RequestMethod.POST)
 	public String toFind(@RequestParam("search_input") String ricerca, Model model) throws Exception{
 		this.interrogatore.ricercaFuzzy(ricerca);
+		if(this.interrogatore.isValida()) {
 		CreaRisultati risultati= this.interrogatore.getRisultati();
 		List<RisultatoDoc> listaRisultati=risultati.risultatiDocumenti();
 		for(RisultatoDoc ris: listaRisultati) {
@@ -44,6 +45,10 @@ public class MainController {
 		model.addAttribute("listaRisultati", listaRisultati);
 		model.addAttribute("hits",risultati.totaleHits());
 		return "risultati.html";
+		}
+		else {
+			return "searchPage.html";
+		}
 	}
 	
 	
