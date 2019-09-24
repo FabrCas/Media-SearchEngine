@@ -13,7 +13,10 @@ public class Coordinate {
 		this.height = height;
 	}
 	
-
+	public Coordinate() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		Coordinate other = (Coordinate) obj;

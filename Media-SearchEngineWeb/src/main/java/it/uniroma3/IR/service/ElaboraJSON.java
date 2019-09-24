@@ -35,13 +35,28 @@ public class ElaboraJSON {
 
 
 	public Coordinate getCoordinateTrascrizione(JSONObject elemento_i) {
-		// TODO Auto-generated method stub
-		return null;
+		Coordinate coordinate_i= new Coordinate();
+		JSONObject area_i= (JSONObject)elemento_i.get("area");
+		coordinate_i.setX((Long) area_i.get("x"));
+		coordinate_i.setY((Long) area_i.get("y"));
+		coordinate_i.setHeight((Long) area_i.get("h"));
+		coordinate_i.setWidth((Long) area_i.get("w"));
+		return coordinate_i;
 	}
 
 	public String getContenutoTrascrizione(JSONObject elemento_i) {
-		// TODO Auto-generated method stub
-		return null;
+		String contenuto="";
+		JSONArray trascrizioni_i= (JSONArray) elemento_i.get("trascriptions");
+		int lunghezza = trascrizioni_i.size();
+		int iterCount=0;
+		for(Object trascrizione_JSON: trascrizioni_i) {
+			String trascrizione= (String) trascrizione_JSON;
+			contenuto += trascrizione;
+			iterCount++;
+			if(!(iterCount==lunghezza))
+				contenuto+= " ";
+		}
+		return contenuto;
 	}
 
 

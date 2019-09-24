@@ -22,8 +22,8 @@ public class MainController {
 	@Autowired
 	private Indicizzatore indicizzatore;
 	
-	@Autowired
-	private Interrogatore interrogatore;
+//	@Autowired
+//	private Interrogatore interrogatore;
 
 	//indicizzazione
 	@RequestMapping(value="/Indexing")

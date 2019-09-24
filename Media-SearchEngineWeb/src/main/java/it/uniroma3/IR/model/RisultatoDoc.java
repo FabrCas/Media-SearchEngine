@@ -1,12 +1,17 @@
 package it.uniroma3.IR.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RisultatoDoc {
 	
 	private String titolo;
 	private String score;
 	private String file;
+	private List<Coordinate> coordinate;
 	
 	public RisultatoDoc() {
+		this.coordinate= new ArrayList<Coordinate>();
 	}
 	
 	public String getTitolo() {
@@ -31,6 +36,14 @@ public class RisultatoDoc {
 
 	public void setFile(String nomeFile) {
 		this.file = nomeFile;
+	}
+	
+	public List<Coordinate> getCoordinate() {
+		return coordinate;
+	}
+
+	public void addCoordinate(Coordinate coordinata) {
+		this.coordinate.add(coordinata);
 	}
 	
 }

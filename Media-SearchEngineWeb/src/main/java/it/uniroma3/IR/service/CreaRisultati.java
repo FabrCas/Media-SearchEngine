@@ -2,8 +2,10 @@ package it.uniroma3.IR.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.IndexSearcher;
@@ -18,39 +20,52 @@ public class CreaRisultati {
 	private TopDocs risultatiRicerca;
 	private String termineRicercato;
 	private IndexSearcher searcher;
-	
-	
+	private List<String> documentiRisultati;
+	private List<RisultatoDoc> messaggioRicerca;
 	
 	public CreaRisultati(TopDocs fuzzyHits, String ricerca, IndexSearcher searcher) {
 		this.risultatiRicerca=fuzzyHits;
 		this.termineRicercato=ricerca;
 		this.searcher= searcher;
-	}
+		this.documentiRisultati= new ArrayList<String>();
+		this.messaggioRicerca= new ArrayList<RisultatoDoc>();
+		analizzaRisultati();
+	} 
 	
-	public String totaleHits() {
+	public String getTotaleHits() {
 		return "numero di documenti in cui ci sono stati riscontri per [" + this.termineRicercato
-				+ "]: " + this.risultatiRicerca.totalHits.value+ "\n";
+				+ "]: " + this.documentiRisultati.size()+ "\n";
 	}
 	
-	
-	public List<RisultatoDoc> risultatiDocumenti(){
+	private void analizzaRisultati() {
 		System.out.println("Creazione risultati ricerca...");
-		List<RisultatoDoc> messaggioRicerca= new ArrayList<RisultatoDoc>();
 		RisultatoDoc risultatoParziale;
 		for (ScoreDoc score: risultatiRicerca.scoreDocs) {
 			try {
-				risultatoParziale= new RisultatoDoc();
 				Document d= this.searcher.doc(score.doc);
-				String nomeFile= d.get("title");
+				String nomeFile= d.get("Filetitle");
+				if(!(this.documentiRisultati.contains(nomeFile))) {
+					this.documentiRisultati.add(nomeFile);
+					
+				}
+				else {
+					
+					
+				}
+				risultatoParziale= new RisultatoDoc();
+				
 				risultatoParziale.setFile(nomeFile);
 				risultatoParziale.setTitolo(getNomeDocumento(nomeFile));
-				risultatoParziale.setScore(modficaScore((score.toString())));
+				risultatoParziale.setScore(modificaScore((score.toString())));
 				messaggioRicerca.add(risultatoParziale);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return messaggioRicerca;
+	}
+	
+	public List<RisultatoDoc> getRisultatiDocumenti(){
+		return this.messaggioRicerca;
 	}
 	
 	private String getNomeDocumento(String titolo) {   //ovvero senza il .txt
@@ -60,13 +75,7 @@ public class CreaRisultati {
 		return nomeDocumento;
 	}
 	
-//	private String getPagina(String nomeFile) {
-//		String nomePagina;
-//		nomePagina= nomeFile.replace(".json", ".jpg");
-//		return nomePagina;
-//	}
-	
-	private String modficaScore(String score) {
+	private String modificaScore(String score) {
 		String scoreMod="";
 		Scanner scanner = new Scanner(score);
 		if(scanner.hasNext())
@@ -76,4 +85,12 @@ public class CreaRisultati {
 		scanner.close();
 		return scoreMod;
 	}
+	
+//	private String getPagina(String nomeFile) {
+//		String nomePagina;
+//		nomePagina= nomeFile.replace(".json", ".jpg");
+//		return nomePagina;
+//	}
+	
+
 }
