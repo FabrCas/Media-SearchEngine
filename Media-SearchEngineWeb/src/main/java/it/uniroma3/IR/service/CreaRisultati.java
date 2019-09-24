@@ -76,7 +76,6 @@ public class CreaRisultati {
 	private String getNomeDocumento(String titolo) {   //ovvero senza il .txt
 		String nomeDocumento;
 		nomeDocumento= titolo.replace(".jpg", "");
-		System.out.println(nomeDocumento);
 		return nomeDocumento;
 	}
 	

@@ -54,7 +54,7 @@ public class Interrogatore {
 			return;
 		}
 		this.isValida= true;
-		System.out.println(testoRicerca);
+		System.out.println("Ricerca nel motore di riceerca per:"+testoRicerca);
 		/*primo modo:*/
 		//Term termineRicerca= new Term("contents",testoRicerca+"~2");
 		//Query fuzzyQuery= new Query(termineRicerca);  //2° parametro int maxEdits, ovvero la massima edit distance (n. operazioni per trasformare termine ricerca in termine ricercato

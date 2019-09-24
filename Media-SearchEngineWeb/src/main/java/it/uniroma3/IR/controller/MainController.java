@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.uniroma3.IR.model.Coordinate;
 import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
@@ -54,6 +55,9 @@ public class MainController {
 			System.out.println(risultati.getTotaleHits());
 			for(RisultatoDoc ris: listaRisultati) {
 				System.out.println(ris.getTitolo());
+				for(Coordinate coordinate: ris.getCoordinate()) {
+					System.out.println(coordinate.toString());
+				}
 			}
 			model.addAttribute("listaRisultati", listaRisultati);
 			model.addAttribute("hits",risultati.getTotaleHits());
