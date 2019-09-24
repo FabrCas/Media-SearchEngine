@@ -34,7 +34,7 @@ public class CreaRisultati {
 	public String getTotaleHits() {
 		return "numero di documenti in cui ci sono stati riscontri per [" + this.termineRicercato
 				+ "]: " + this.mappingRisultatiPerNomeDoc.keySet().size()+ "\n";
-	}
+	} 
 	
 	private void analizzaRisultati() {
 		System.out.println("Creazione risultati ricerca...");
@@ -48,10 +48,12 @@ public class CreaRisultati {
 					risultatoParziale= new RisultatoDoc(); 
 					risultatoParziale.setFile(nomeFile);
 					risultatoParziale.setTitolo(getNomeDocumento(nomeFile));
+					risultatoParziale.setScore(Float.parseFloat(modificaScore(score.toString()))); 
 				}
 				//documento presente
 				else {
 					risultatoParziale= mappingRisultatiPerNomeDoc.get(nomeFile);
+					risultatoParziale.addScore(Float.parseFloat(modificaScore((score.toString()))));
 				}
 				//costruisco le coordinate di questa trascrizione
 				Coordinate coordinata= new Coordinate();
@@ -80,13 +82,16 @@ public class CreaRisultati {
 	}
 	
 	private String modificaScore(String score) {
-		String scoreMod="";
+		String scoreMod = "";
 		Scanner scanner = new Scanner(score);
 		if(scanner.hasNext())
 			scanner.next();
-		if(scanner.hasNext())
-			scoreMod=scoreMod + scanner.next();
+		if(scanner.hasNext()) {
+			scoreMod= scanner.next();
+			scoreMod= scoreMod.substring(6);//scoreMod valore del tipo: score=0.32343434...
+		}
 		scanner.close();
+		System.out.println(scoreMod);
 		return scoreMod;
 	}
 	

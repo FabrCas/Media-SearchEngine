@@ -53,12 +53,14 @@ public class MainController {
 			CreaRisultati risultati= this.interrogatore.getRisultati();
 			List<RisultatoDoc> listaRisultati=risultati.getRisultatiDocumenti();
 			System.out.println(risultati.getTotaleHits());
-			for(RisultatoDoc ris: listaRisultati) {
-				System.out.println(ris.getTitolo());
-				for(Coordinate coordinate: ris.getCoordinate()) {
-					System.out.println(coordinate.toString());
-				}
-			}
+//			for(RisultatoDoc ris: listaRisultati) {
+//				System.out.println(ris.getTitolo());
+//				System.out.println(ris.getScore());
+//				for(Coordinate coordinate: ris.getCoordinate()) {
+//					System.out.println(coordinate.toString());
+//				}
+//			}
+			
 			model.addAttribute("listaRisultati", listaRisultati);
 			model.addAttribute("hits",risultati.getTotaleHits());
 			return "risultati.html";
@@ -71,11 +73,9 @@ public class MainController {
 	
 	
 	@RequestMapping(value = { "/", "/index"})
-	public String index(Model model) {
-		
+	public String index(Model model) {	
 		return "searchPage.html";
 	}
-	
 	
 	@RequestMapping("/home")
 	public String toHome(){

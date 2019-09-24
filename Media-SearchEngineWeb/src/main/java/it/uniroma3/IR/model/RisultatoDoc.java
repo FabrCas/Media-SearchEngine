@@ -6,7 +6,7 @@ import java.util.List;
 public class RisultatoDoc {
 	
 	private String titolo;
-	private String score;
+	private float score;
 	private String file;
 	private List<Coordinate> coordinate;
 	
@@ -24,11 +24,15 @@ public class RisultatoDoc {
 	}
 
 	public String getScore() {
-		return score;
+		return "Score:"+score;
 	}
 
-	public void setScore(String score) {
+	public void setScore(float score) {
 		this.score = score;
+	}
+	
+	public void addScore(float score) {
+		this.score += score;
 	}
 
 	public String getFile() {
