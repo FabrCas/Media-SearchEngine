@@ -10,13 +10,15 @@ import java.util.Map;*/
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import it.uniroma3.IR.model.Coordinate;
+
 public class ElaboraJSON {
 	//private Map<String,List<Coordinate>> parolaPosizione;
 	
 	public ElaboraJSON() {
 	}
 
-    public String getContenuto(JSONArray array ) {
+    public String getContenutoDocumento(JSONArray array ) {
     String risultato="";
     	for(int i=0; i< array.size(); i++) {
     		JSONObject word= (JSONObject) array.get(i);
@@ -31,7 +33,19 @@ public class ElaboraJSON {
     	return risultato;	
     }
 
-    /*da utilizzare
+
+	public Coordinate getCoordinateTrascrizione(JSONObject elemento_i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getContenutoTrascrizione(JSONObject elemento_i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+    /*da utilizzare se si vuole avere un mapping in memoria centrale
     private Map<String,List<Coordinate>> aggiungiValoreMappa (JSONArray array) {
 		this.parolaPosizione= new HashMap<String,List<Coordinate>>();
     	for(int i=0; i< array.size(); i++) {

@@ -20,6 +20,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.springframework.stereotype.Component;
 
+import it.uniroma3.IR.model.Coordinate;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -82,13 +83,8 @@ public class Indicizzatore {
 				String nomeFile= (String) jonb.get("file-name");
 				//System.out.println("Sto caricando il file: "+ nomeFile + " ...");
 				JSONArray jArray= (JSONArray) jonb.get("words");
+				this.scorriDocumento(nomeFile, jArray);
 				
-				//System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
-				String contenuto= this.elaboratore.getContenuto(jArray);
-				System.out.println("il contenuto del documento con id: " + id + "\n" + contenuto);
-				
-				this.indicizzaDocumento(nomeFile, contenuto, this.id);
-				id++;
 				this.counterDocsIndexed++;
 				reader.close();
 			} catch (FileNotFoundException e) {
@@ -105,15 +101,32 @@ public class Indicizzatore {
     	}
     }
     
-    
-    public void indicizzaDocumento(String titolo, String corpo, Long id) {
+    //funzione che invoca n volte, con n il numero di trascrizione in un documento, la funzione 
+    //indicizza trascrizione
+    private void scorriDocumento(String nomeFile, JSONArray words) {
+    	int numeroTrascrizioni= words.size();
+    	for(int i=0;i<numeroTrascrizioni;i++) {
+    		JSONObject elemento_i= (JSONObject)words.get(i);
+    		String contenuto_i= this.elaboratore.getContenutoTrascrizione(elemento_i);
+    		Coordinate coordinate_i= this.elaboratore.getCoordinateTrascrizione(elemento_i);
+    		//System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
+//    		String contenutoTrascrizione= this.elaboratore.getContenutoTrascrizioni(words)
+    		System.out.println("il contenuto della trascrione " + this.id
+    				+ ", del documento n°: " + this.counterDocsIndexed + "\n" + contenuto_i);
+    		this.id++;
+    		//indicizzaTrascrizione(nomeFile, corpo, this.id);
+    	}
+    }
+
+
+    private void indicizzaTrascrizione(String titolo, String corpo, Long id) {
         try {
         	//creazione di un documento di Lucene
             Document document = new Document();
             document.add(new StringField("title", titolo, Field.Store.YES));
             document.add(new TextField("contents", corpo, Field.Store.YES));
             document.add(new StringField("id",id.toString() , Field.Store.YES));
-            
+            //document.add(x,y,width,height
             writer.addDocument(document);
             writer.commit();
         } catch (IOException e) {
@@ -121,7 +134,26 @@ public class Indicizzatore {
         }
     }
     
+//    public void indicizzaDocumento(String titolo, String corpo, Long id) {
+//        try {
+//        	//creazione di un documento di Lucene
+//            Document document = new Document();
+//            document.add(new StringField("title", titolo, Field.Store.YES));
+//            document.add(new TextField("contents", corpo, Field.Store.YES));
+//            document.add(new StringField("id",id.toString() , Field.Store.YES));
+//            
+//            writer.addDocument(document);
+//            writer.commit();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+    
     public int getCounterDocsIndexed() {
 		return counterDocsIndexed;
 	}
+    
+    public Long getLastId() {
+    	return this.id; 
+    }
 }
