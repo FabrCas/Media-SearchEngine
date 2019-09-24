@@ -22,8 +22,8 @@ public class MainController {
 	@Autowired
 	private Indicizzatore indicizzatore;
 	
-//	@Autowired
-//	private Interrogatore interrogatore;
+	@Autowired
+	private Interrogatore interrogatore;
 
 	//indicizzazione
 	@RequestMapping(value="/Indexing")
@@ -50,12 +50,13 @@ public class MainController {
 		this.interrogatore.ricercaFuzzy(ricerca);
 		if(this.interrogatore.isValida()) {
 			CreaRisultati risultati= this.interrogatore.getRisultati();
-			List<RisultatoDoc> listaRisultati=risultati.risultatiDocumenti();
+			List<RisultatoDoc> listaRisultati=risultati.getRisultatiDocumenti();
+			System.out.println(risultati.getTotaleHits());
 			for(RisultatoDoc ris: listaRisultati) {
 				System.out.println(ris.getTitolo());
 			}
 			model.addAttribute("listaRisultati", listaRisultati);
-			model.addAttribute("hits",risultati.totaleHits());
+			model.addAttribute("hits",risultati.getTotaleHits());
 			return "risultati.html";
 		}
 		else {

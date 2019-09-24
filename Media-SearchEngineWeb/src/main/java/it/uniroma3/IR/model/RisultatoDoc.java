@@ -12,6 +12,7 @@ public class RisultatoDoc {
 	
 	public RisultatoDoc() {
 		this.coordinate= new ArrayList<Coordinate>();
+	//	this.score=0L;
 	}
 	
 	public String getTitolo() {
