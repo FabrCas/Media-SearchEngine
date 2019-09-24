@@ -17,7 +17,6 @@ import it.uniroma3.IR.model.RisultatoDoc;
 
 
 public class CreaRisultati {
-	//TODO
 	private TopDocs risultatiRicerca;
 	private String termineRicercato;
 	private IndexSearcher searcher;
@@ -91,7 +90,6 @@ public class CreaRisultati {
 			scoreMod= scoreMod.substring(6);//scoreMod valore del tipo: score=0.32343434...
 		}
 		scanner.close();
-		System.out.println(scoreMod);
 		return scoreMod;
 	}
 	

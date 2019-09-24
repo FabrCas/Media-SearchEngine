@@ -3,7 +3,7 @@ package it.uniroma3.IR.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RisultatoDoc {
+public class RisultatoDoc{
 	
 	private String titolo;
 	private float score;
@@ -12,7 +12,6 @@ public class RisultatoDoc {
 	
 	public RisultatoDoc() {
 		this.coordinate= new ArrayList<Coordinate>();
-	//	this.score=0L;
 	}
 	
 	public String getTitolo() {
@@ -23,6 +22,10 @@ public class RisultatoDoc {
 		this.titolo = titolo;
 	}
 
+	public float getScoreValue() {
+		return this.score;
+	}
+	
 	public String getScore() {
 		return "Score:"+score;
 	}
@@ -50,5 +53,7 @@ public class RisultatoDoc {
 	public void addCoordinate(Coordinate coordinata) {
 		this.coordinate.add(coordinata);
 	}
+
+
 	
 }

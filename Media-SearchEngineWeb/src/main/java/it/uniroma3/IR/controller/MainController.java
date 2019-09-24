@@ -1,5 +1,7 @@
 package it.uniroma3.IR.controller;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import it.uniroma3.IR.model.Coordinate;
+import it.uniroma3.IR.comparatore.RisultatatoDocComparatore;
 import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
@@ -60,7 +62,7 @@ public class MainController {
 //					System.out.println(coordinate.toString());
 //				}
 //			}
-			
+			Collections.sort(listaRisultati, new RisultatatoDocComparatore());
 			model.addAttribute("listaRisultati", listaRisultati);
 			model.addAttribute("hits",risultati.getTotaleHits());
 			return "risultati.html";
