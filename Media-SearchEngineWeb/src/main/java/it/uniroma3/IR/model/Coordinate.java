@@ -5,12 +5,14 @@ public class Coordinate {
 	private Long y;
 	private Long width;
 	private Long height;
+
 	
 	public Coordinate(Long x, Long y, Long width, Long height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.prova= "prova";
 	}
 	
 	public Coordinate() {
@@ -59,5 +61,14 @@ public class Coordinate {
 	public void setHeight(Long height) {
 		this.height = height;
 	}
+	
+	public String getProva() {
+		return prova;
+	}
+
+	public void setProva(String prova) {
+		this.prova = prova;
+	}
+	private String prova;
 
 }
