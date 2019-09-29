@@ -30,6 +30,15 @@ public class Interrogatore {
 	private IndexReader reader;
 	private boolean isValida= true;
 	
+	private int errorCode;
+	/* 0 -> query corretta, errore non presente  (non viene utilizzato in questo caso, passaggio diretto al template risultati)
+	 * 1 -> query di ricerca vuota
+	 * 2 -> query di ricerca contentente solo spazi
+	 * 3 -> query di ricerca che non rispetta la sintassi wildcard (vedi funzione analizzaQuery)
+	 * 
+	 * 4 valori che si autoescludono, uno solo possibile per ricerca
+	 */
+	
 	
 	
 	public Interrogatore (){
@@ -42,19 +51,26 @@ public class Interrogatore {
 	}
 	
 	public void ricercaFuzzy(String testo) throws Exception {
+		/*inizializzazione in situazione di partenza*/
+		this.isValida=true;
+		this.errorCode=0;
+		
 		if(testo.equals("")) {
 			System.out.println("ricerca non valida, nessun testo di ricerca aggiunto!\n");
 			this.isValida= false;
-			return;
-		}
-		String testoRicerca= this.analizzaQuery(testo);
-		if(testoRicerca.trim().equals("")) {
+			this.errorCode=1;
+		}	
+		else if(testo.trim().equals("")) {
 			System.out.println("ricerca non valida, stai cercando uno o più: ' '!\n");
 			this.isValida= false;
-			return;
+			this.errorCode= 2;
 		}
-		this.isValida= true;
-		System.out.println("Ricerca nel motore di riceerca per:"+testoRicerca);
+		boolean esisteErroreWildcard = this.analizzaQuery(testo);
+		this.isValida= ((!(esisteErroreWildcard)) && (this.isValida));
+		
+		if(this.isValida) {
+			/*ora ci sono i criteri per effettuare la ricerca*/
+		System.out.println("Ricerca nel motore di riceerca per:"+testo);
 		/*primo modo:*/
 		//Term termineRicerca= new Term("contents",testoRicerca+"~2");
 		//Query fuzzyQuery= new Query(termineRicerca);  //2° parametro int maxEdits, ovvero la massima edit distance (n. operazioni per trasformare termine ricerca in termine ricercato
@@ -62,7 +78,7 @@ public class Interrogatore {
 		
 		/*secondo modo:*/
 		QueryParser qp= new QueryParser("contents", new StandardAnalyzer());
-		Query fuzzyQuery= qp.parse(testoRicerca+"~2");
+		Query fuzzyQuery= qp.parse(testo+"~2");
 		
 		//di default lucene fa l'OR tra le i vari termini della query
 		//wildcard auto implementate, sintassi:
@@ -70,7 +86,12 @@ public class Interrogatore {
 		//rimpiazzamento di più caratteri -> *
 		
 		TopDocs fuzzyHits= this.searcher.search(fuzzyQuery,NUM_RESULT);
-		this.risultati= new CreaRisultati(fuzzyHits, testoRicerca, this.searcher);
+		this.risultati= new CreaRisultati(fuzzyHits, testo, this.searcher);
+		}
+		else {
+			if(this.errorCode==0) 
+				this.errorCode=3;
+		}
 	}
 	
 	private IndexSearcher creaSearcher() throws IOException{
@@ -92,31 +113,28 @@ public class Interrogatore {
 	 * - termine chiave isolato da una parola prima e dopo -> ? [parola] || [parola] ? || * [parola] || [parola] *
 	 * 
 	 */
-	private String analizzaQuery (String stringaRicerca) {
-		String stringaRicercaAnalizzata="";
-		String s1;
-		String s2;
+	private boolean analizzaQuery (String stringaRicerca) {
+		boolean risultato= false; //inizialemente non c'è errore 
+		String stringaTemp;
 		Scanner scanner= new Scanner(stringaRicerca);
 		while(scanner.hasNext()) {
-			s1= scanner.next();
-			
-			//* o ? sono stringhe staccate? 
-			if(!(s1.equals("*") || s1.equals("?"))) {				
-				System.out.println(stringaRicercaAnalizzata);
-				//verifico se s1 non contiene all'inizio * o ?
-				if(!((s1.charAt(0)=='?') || (s1.charAt(0)=='*')))
-					stringaRicercaAnalizzata += s1.trim();
-				else {
-					s2=(s1.subSequence(1, s1.length())).toString();
-					System.out.println(s2);
-					stringaRicercaAnalizzata += s2;
-				}
+			stringaTemp= scanner.next();
+
+			//* o ? sono stringhe st accate? 
+			if((stringaTemp.equals("*") || stringaTemp.equals("?"))) {
+				scanner.close();
+				risultato= true;
+				return risultato;
 			}
-			if (scanner.hasNext())
-				stringaRicercaAnalizzata += " ";
+			//verifico se s1 non contiene all'inizio * o ?
+			if(((stringaTemp.charAt(0)=='?') || (stringaTemp.charAt(0)=='*'))) {
+				scanner.close();
+				risultato= true;
+				return risultato;
+			}
 		}
 		scanner.close();
-		return stringaRicercaAnalizzata;
+		return risultato;
 	}
 
 	public CreaRisultati getRisultati () {
@@ -125,6 +143,10 @@ public class Interrogatore {
 	
 	public boolean isValida() {
 		return this.isValida;
+	}
+	
+	public int getErrorCode() {
+		return this.errorCode;
 	}
 
 

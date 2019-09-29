@@ -20,16 +20,18 @@
 					onmouseout="cambiaColorefuori(this.id)"></span> 
 					
 					<span th:text="${risultatoDoc.score}"> Score </span>
+					<span th:text="${risultatoDoc.coordinate}"> x </span>
+
 			</h4>
 		<li>
 	</ul>
+	
 	<div>
 		<h1>Ritorna alla home:</h1>
 		<a href="/home"> home </a>
 	</div>
 
 	<script type="text/javascript" th:inline="javascript" src="/javaScript/apriMedia.js"></script>	
-	<script>
-	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
 </html>

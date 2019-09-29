@@ -1,6 +1,5 @@
 package it.uniroma3.IR.controller;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.uniroma3.IR.comparatore.RisultatatoDocComparatore;
+import it.uniroma3.IR.model.Coordinate;
 import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
@@ -35,7 +35,7 @@ public class MainController {
 		System.out.println("indicizzazione...\n");
 		this.indicizzatore.indicizzaCartella();
 		return "Indicizzazione completata! \nSono stati indicizzati "+ this.indicizzatore.getCounterDocsIndexed()
-		+ " documenti."; 
+		+ " documenti.\n" + "Con un numero complessivo di trascrizioni pari a: "+this.indicizzatore.getLastId(); 
 	}
 	
 	
@@ -55,19 +55,20 @@ public class MainController {
 			CreaRisultati risultati= this.interrogatore.getRisultati();
 			List<RisultatoDoc> listaRisultati=risultati.getRisultatiDocumenti();
 			System.out.println(risultati.getTotaleHits());
-//			for(RisultatoDoc ris: listaRisultati) {
-//				System.out.println(ris.getTitolo());
-//				System.out.println(ris.getScore());
-//				for(Coordinate coordinate: ris.getCoordinate()) {
-//					System.out.println(coordinate.toString());
-//				}
-//			}
+			for(RisultatoDoc ris: listaRisultati) {
+				System.out.println(ris.getTitolo());
+				System.out.println(ris.getScore());
+				for(Coordinate coordinate: ris.getCoordinate()) {
+					System.out.println(coordinate.toString());
+				}
+			}
 			Collections.sort(listaRisultati, new RisultatatoDocComparatore());
 			model.addAttribute("listaRisultati", listaRisultati);
 			model.addAttribute("hits",risultati.getTotaleHits());
 			return "risultati.html";
 		}
 		else {
+			model.addAttribute("errorCode", this.interrogatore.getErrorCode());
 			return "searchPage.html";
 		}
 	}

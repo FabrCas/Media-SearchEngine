@@ -30,7 +30,6 @@ public class Coordinate {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
 		return "Coordinate [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";

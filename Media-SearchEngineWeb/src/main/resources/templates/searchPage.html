@@ -8,7 +8,7 @@
 
 
 </head>
-<body>
+<body onLoad="controlloErrore()" >
 <p> Motore di ricerca:
 </p>
 <div id="1">
@@ -29,8 +29,28 @@ Premi sotto per indicizzare i documenti
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/javaScript/startIndexing.js">
+<script type="text/javascript" src="/javaScript/startIndexing.js"></script>
+<script type="text/javascript" th:inline="javascript">
+//nessun errore, non legge la sintassi di thymeleaf
+var errorCode = [[${errorCode}]];
 
+function stampaErrore(){
+	if (errorCode==1){
+		window.alert("ricerca non valida: nessun carattere digitato");
+	}
+	if (errorCode==2){
+		window.alert("ricerca non valida: solo spazi");
+	}
+	if (errorCode==3){
+		window.alert("ricerca non valida: sintassi wildcard non permessa");
+	}
+}
+
+
+function controlloErrore(){
+	if(!(errorCode==0))
+		stampaErrore();
+}
 </script>
 
 </body>
