@@ -1,5 +1,9 @@
 package it.uniroma3.IR.service;
 
+import java.util.Scanner;
+
+import org.apache.lucene.document.Document;
+
 /*
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +16,10 @@ import org.json.simple.JSONObject;
 
 import it.uniroma3.IR.model.Coordinate;
 
-public class ElaboraJSON {
+public class ElaboraCampi {
 	//private Map<String,List<Coordinate>> parolaPosizione;
 	
-	public ElaboraJSON() {
+	public ElaboraCampi() {
 	}
 
     public String getContenutoDocumento(JSONArray array ) {
@@ -57,6 +61,19 @@ public class ElaboraJSON {
 				contenuto+= " ";
 		}
 		return contenuto;
+	}
+
+	public void aggiungiInfoDocumento(String documentoInfo, Document doc) {
+		Scanner scanner= new Scanner(documentoInfo);
+		scanner.useDelimiter("_");
+		String[] infoDoc = {"Filetitle","","","",""};
+		int i=0;
+		
+		while(scanner.hasNext()) {
+			
+		}
+		// TODO Auto-generated method stub
+		scanner.close();
 	}
 
 

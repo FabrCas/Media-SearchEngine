@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -28,7 +30,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-@Component
+ @Component
 public class Indicizzatore {
 	
 	/* folders, paths*/
@@ -47,12 +49,12 @@ public class Indicizzatore {
     private Long id;
     
     /*utilità*/
-    private ElaboraJSON elaboratore;
+    private ElaboraCampi elaboratore;
 	
     public Indicizzatore() {
     	try {
     		this.id=0L;
-    		this.elaboratore= new ElaboraJSON();
+    		this.elaboratore= new ElaboraCampi();
     		//istanza di org.apache.lucene.store.Directory
 			this.dirIndexedFiles= FSDirectory.open(Paths.get(INDEX_DIR));
 			//analizzatore con le stop word di default 
@@ -69,6 +71,7 @@ public class Indicizzatore {
     }
     
     //metodo che elabora i file .json nella direcory "inputFiles" e ritorna la classe per gestire la risposta
+    //per ora un solo file 
     public void indicizzaCartella() {
     	File file= new File(INPUT_DIR); //folder
     	File[] fileArray = file.listFiles(); //array of json files
@@ -78,14 +81,12 @@ public class Indicizzatore {
     	FileReader reader;
     	for(File f: fileArray) {
     		try {
-    			this.elaboratore= new ElaboraJSON();
+    			this.elaboratore= new ElaboraCampi();
 				reader= new FileReader(f);
 				JSONObject jonb= (JSONObject)jsonParser.parse(reader);
-				String nomeFile= (String) jonb.get("file-name");
-				//System.out.println("Sto caricando il file: "+ nomeFile + " ...");
-				JSONArray jArray= (JSONArray) jonb.get("words");
-				this.counterDocsIndexed++;
-				this.scorriDocumento(nomeFile, jArray);
+//				String nomeFile= (String) jonb.get("file-name");
+//				JSONArray jArray= (JSONArray) jonb.get("words");
+				this.scorriFile(jonb);
 				reader.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -103,55 +104,64 @@ public class Indicizzatore {
     
     //funzione che invoca n volte, con n il numero di trascrizione in un documento, la funzione 
     //indicizza trascrizione
-    private void scorriDocumento(String nomeFile, JSONArray words) {
-    	System.out.println("\n******************************************************************");
-    	int numeroTrascrizioni= words.size();
-    	for(int i=0;i<numeroTrascrizioni;i++) {
-    		JSONObject elemento_i= (JSONObject)words.get(i);
-    		String contenuto_i= this.elaboratore.getContenutoTrascrizione(elemento_i);
-    		Coordinate coordinate_i= this.elaboratore.getCoordinateTrascrizione(elemento_i);
-
-    		/*Stampe di prova*/
-    		//System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
-    		System.out.println("\nil contenuto della trascrizione " + this.id
-    				+ ", del documento n°: " + this.counterDocsIndexed + ":");
-    		System.out.println("trascrizioni: "+ contenuto_i);
-    		System.out.println("coordinate:" + coordinate_i);
-    		/*fine stampe di prova*/
-    		indicizzaTrascrizione(nomeFile, contenuto_i,coordinate_i, this.id);
-    		this.id++;
+    private void scorriFile(JSONObject joFile) {
+    	JSONObject pagineDocumento= (JSONObject) joFile.get("bbxs");
+    	int numeroDocumenti= pagineDocumento.size();
+    	System.out.println("numero documenti indicizzati: "+ numeroDocumenti+ "\n");
+    	
+		@SuppressWarnings("unchecked")
+		Set<String> chiaviDocumenti = pagineDocumento.keySet();
+    	//String[] chiaviDocumenti2= (String[])chiaviDocumenti.toArray();
+    	Iterator<String> iteratore= chiaviDocumenti.iterator();
+    	while(iteratore.hasNext()) {
+    		Document documento= new Document();
+    		String documentoInfo= (String) iteratore.next();
+    		System.out.println(documentoInfo);
+    		this.elaboratore.aggiungiInfoDocumento(documentoInfo, documento);
+    		//Document document = new Document();
+    		this.counterDocsIndexed++;
+    		//this.scorriPagina()
+    		
     	}
-    	System.out.println("\n******************************************************************");
     }
 
-
-    private void indicizzaTrascrizione(String titolo, String corpo,Coordinate coordinate, Long id) {
-        try {
-        	//creazione di un documento di Lucene
-            Document document = new Document();
-            document.add(new StringField("Filetitle", titolo, Field.Store.YES));
-            document.add(new TextField("contents", corpo, Field.Store.YES));
-            document.add(new StringField("id",id.toString() , Field.Store.YES));
-            document.add(new StoredField("x", coordinate.getX()));
-            document.add(new StoredField("y", coordinate.getY()));
-            document.add(new StoredField("w", coordinate.getWidth()));
-            document.add(new StoredField("h", coordinate.getHeight()));
-            //document.add(x,y,width,height
-            writer.addDocument(document);
-            writer.commit();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     
-//    public void indicizzaDocumento(String titolo, String corpo, Long id) {
+//    private void scorriPagina() {
+//    	
+//    	System.out.println("\n******************************************************************");
+//    	int numeroTrascrizioni= words.size();
+//    	for(int i=0;i<numeroTrascrizioni;i++) {
+//    		JSONObject elemento_i= (JSONObject)words.get(i);
+//    		String contenuto_i= this.elaboratore.getContenutoTrascrizione(elemento_i);
+//    		Coordinate coordinate_i= this.elaboratore.getCoordinateTrascrizione(elemento_i);
+//
+//    		/*Stampe di prova*/
+//    		//System.out.println(jArray); //array composto da oggetti, con due proprietà: area e trascription
+//    		System.out.println("\nil contenuto della trascrizione " + this.id
+//    				+ ", del documento n°: " + this.counterDocsIndexed + ":");
+//    		System.out.println("trascrizioni: "+ contenuto_i);
+//    		System.out.println("coordinate:" + coordinate_i);
+//    		/*fine stampe di prova*/
+//    		indicizzaTrascrizione(nomeFile, contenuto_i,coordinate_i, this.id);
+//    		this.id++;
+//    	}
+//    	System.out.println("\n******************************************************************");
+//    }
+//    
+//    
+//
+//    private void indicizzaTrascrizione(String titolo, String corpo,Coordinate coordinate, Long id) {
 //        try {
 //        	//creazione di un documento di Lucene
-//            Document document = new Document();
-//            document.add(new StringField("title", titolo, Field.Store.YES));
+//            
+//            document.add(new StringField("Filetitle", titolo, Field.Store.YES));
 //            document.add(new TextField("contents", corpo, Field.Store.YES));
 //            document.add(new StringField("id",id.toString() , Field.Store.YES));
-//            
+//            document.add(new StoredField("x", coordinate.getX()));
+//            document.add(new StoredField("y", coordinate.getY()));
+//            document.add(new StoredField("w", coordinate.getWidth()));
+//            document.add(new StoredField("h", coordinate.getHeight()));
+//            //document.add(x,y,width,height
 //            writer.addDocument(document);
 //            writer.commit();
 //        } catch (IOException e) {
