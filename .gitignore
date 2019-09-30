@@ -1,6 +1,12 @@
 # Created by https://www.gitignore.io/api/java,images,java-web
 # Edit at https://www.gitignore.io/?templates=java,images,java-web
 
+
+
+### media folder ###
+documents/
+
+
 ### Images ###
 # JPEG
 *.jpg
