@@ -10,9 +10,6 @@ import java.util.List;
 import it.uniroma3.IR.model.Coordinate;
 import java.util.Map;*/
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 public class ElaboraCampi {
 	//private Map<String,List<Coordinate>> parolaPosizione;
 	
