@@ -6,6 +6,9 @@
 ### media folder ###
 /documents/**
 
+### indexed files folder ###
+/indexedFiles/**
+
 
 ### Images ###
 # JPEG
