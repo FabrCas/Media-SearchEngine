@@ -1,8 +1,7 @@
 package it.uniroma3.IR.service;
 
+import java.util.List;
 import java.util.Scanner;
-
-import org.apache.lucene.document.Document;
 
 /*
 import java.util.ArrayList;
@@ -14,65 +13,71 @@ import java.util.Map;*/
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import it.uniroma3.IR.model.Coordinate;
-
 public class ElaboraCampi {
 	//private Map<String,List<Coordinate>> parolaPosizione;
 	
 	public ElaboraCampi() {
 	}
 
-    public String getContenutoDocumento(JSONArray array ) {
-    String risultato="";
-    	for(int i=0; i< array.size(); i++) {
-    		JSONObject word= (JSONObject) array.get(i);
-    		JSONArray trascrizioni= (JSONArray) word.get("trascriptions");
-    		//System.out.println(trascrizioni.toString());
-    		for(Object x: trascrizioni) {
-    			String nome= (String) x;
-    			risultato+=(nome);
-    			risultato+=(" ");
-    		}
-    	}
-    	return risultato;	
-    }
+//    public String getContenutoDocumento(JSONArray array ) {
+//    String risultato="";
+//    	for(int i=0; i< array.size(); i++) {
+//    		JSONObject word= (JSONObject) array.get(i);
+//    		JSONArray trascrizioni= (JSONArray) word.get("trascriptions");
+//    		//System.out.println(trascrizioni.toString());
+//    		for(Object x: trascrizioni) {
+//    			String nome= (String) x;
+//    			risultato+=(nome);
+//    			risultato+=(" ");
+//    		}
+//    	}
+//    	return risultato;	
+//    }
 
 
-	public Coordinate getCoordinateTrascrizione(JSONObject elemento_i) {
-		Coordinate coordinate_i= new Coordinate();
-		JSONObject area_i= (JSONObject)elemento_i.get("area");
-		coordinate_i.setX((Long)area_i.get("x"));
-		coordinate_i.setY((Long) area_i.get("y"));
-		coordinate_i.setHeight((Long) area_i.get("h"));
-		coordinate_i.setWidth((Long) area_i.get("w"));
-		return coordinate_i;
-	}
 
-	public String getContenutoTrascrizione(JSONObject elemento_i) {
+
+	public String getContenutoTrascrizione(String trascrizioni) {
 		String contenuto="";
-		JSONArray trascrizioni_i= (JSONArray) elemento_i.get("trascriptions");
-		int lunghezza = trascrizioni_i.size();
-		int iterCount=0;
-		for(Object trascrizione_JSON: trascrizioni_i) {
-			String trascrizione= (String) trascrizione_JSON;
-			contenuto += trascrizione;
-			iterCount++;
-			if(!(iterCount==lunghezza))
-				contenuto+= " ";
+		Scanner scanner= new Scanner(trascrizioni);
+		scanner.useDelimiter("\n");
+		while(scanner.hasNext()) {
+			contenuto += scanner.next();
+			if(scanner.hasNext())
+				contenuto += " ";
 		}
+		scanner.close();
 		return contenuto;
 	}
 
-	public void aggiungiInfoDocumento(String documentoInfo, Document doc) {
+	
+	public String elaboraInfoDocumento(String documentoInfo, List<String> coordinateDocumento) {
 		Scanner scanner= new Scanner(documentoInfo);
 		scanner.useDelimiter("_");
-		String[] infoDoc = {"Filetitle","","","",""};
+		String titolo="";
 		int i=0;
-		
 		while(scanner.hasNext()) {
-			
+			String value= scanner.next();
+			if(i==0) {
+				titolo= value;
+			}
+			else {
+				coordinateDocumento.add(value);
+			}
+			i++;
 		}
 		// TODO Auto-generated method stub
+		scanner.close();
+		return titolo;
+	}
+	
+	public void getCoordinateParola(String parolaInfo, List<String> coordinateParola) {
+		Scanner scanner= new Scanner(parolaInfo);
+		scanner.useDelimiter("_");
+		while(scanner.hasNext()) {
+			String value= scanner.next();
+			coordinateParola.add(value);
+		}
 		scanner.close();
 	}
 
