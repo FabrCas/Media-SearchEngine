@@ -19,7 +19,7 @@
 				th:text="${risultatoDoc.score}"> Score </span>
 
 			<ul style="list-style-type: none;">
-				<li th:each="coordinata: ${risultatoDoc.coordinate}">
+				<li th:each="coordinata: ${risultatoDoc.coordinateP}">
 				<span th:text="'|x: '+${coordinata.x} +'|' " onclick="stampa()"> x </span>
 				<span th:text="'|y: '+ ${coordinata.y} +'|'" onclick="stampa()"> y </span>
 				<span th:text="'|w: '+ ${coordinata.width} +'|'" onclick="stampa()"> w </span>

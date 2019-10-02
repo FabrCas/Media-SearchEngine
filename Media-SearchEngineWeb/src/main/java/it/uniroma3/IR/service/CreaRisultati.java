@@ -32,7 +32,7 @@ public class CreaRisultati {
 	
 	public String getTotaleHits() {
 		return "numero di documenti in cui ci sono stati riscontri per [" + this.termineRicercato
-				+ "]: " + this.mappingRisultatiPerNomeDoc.keySet().size()+ "\n";
+				+ "]: " + this.mappingRisultatiPerNomeDoc.keySet().size()+ "\n"; //numero pagine (documenti) con riscontri
 	} 
 	
 	private void analizzaRisultati() {
@@ -48,19 +48,26 @@ public class CreaRisultati {
 					risultatoParziale.setFile(nomeFile);
 					risultatoParziale.setTitolo(getNomeDocumento(nomeFile));
 					risultatoParziale.setScore(Float.parseFloat(modificaScore(score.toString()))); 
+					Coordinate coordinateDocumento= new Coordinate();
+					coordinateDocumento.setX(Long.parseLong(d.get("xD")));
+					coordinateDocumento.setY(Long.parseLong(d.get("yD")));
+					coordinateDocumento.setWidth(Long.parseLong(d.get("wD")));
+					coordinateDocumento.setHeight(Long.parseLong(d.get("hD")));
+					risultatoParziale.setCoordinateD(coordinateDocumento);
 				}
 				//documento presente
 				else {
 					risultatoParziale= mappingRisultatiPerNomeDoc.get(nomeFile);
-					risultatoParziale.addScore(Float.parseFloat(modificaScore((score.toString()))));
+					/*c'è stato già un hit con uno score, il nuovo score si va a sommare*/
+					risultatoParziale.addScore(Float.parseFloat(modificaScore((score.toString())))); 
 				}
 				//costruisco le coordinate di questa trascrizione
-				Coordinate coordinata= new Coordinate();
-				coordinata.setX(Long.parseLong(d.get("x")));
-				coordinata.setY(Long.parseLong(d.get("y")));
-				coordinata.setWidth(Long.parseLong(d.get("w")));
-				coordinata.setHeight(Long.parseLong(d.get("h")));
-				risultatoParziale.addCoordinate(coordinata);
+				Coordinate coordinataParola= new Coordinate();
+				coordinataParola.setX(Long.parseLong(d.get("xP")));
+				coordinataParola.setY(Long.parseLong(d.get("yP")));
+				coordinataParola.setWidth(Long.parseLong(d.get("wP")));
+				coordinataParola.setHeight(Long.parseLong(d.get("hP")));
+				risultatoParziale.addCoordinateP(coordinataParola);
 				this.mappingRisultatiPerNomeDoc.put(nomeFile, risultatoParziale);
 				//risultatoParziale.setScore(modificaScore((score.toString())));
 			} catch (IOException e) {

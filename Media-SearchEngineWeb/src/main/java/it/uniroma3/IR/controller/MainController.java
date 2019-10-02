@@ -25,8 +25,8 @@ public class MainController {
 	@Autowired
 	private Indicizzatore indicizzatore;
 	
-//	@Autowired
-//	private Interrogatore interrogatore;
+	@Autowired
+	private Interrogatore interrogatore;
 
 	//indicizzazione
 	@RequestMapping(value="/Indexing")
@@ -48,30 +48,30 @@ public class MainController {
 //	}
 	 
 	//interrogazione
-//	@RequestMapping(value="/toFind", method= RequestMethod.POST)
-//	public String toFind(@RequestParam("search_input") String ricerca, Model model) throws Exception{
-//		this.interrogatore.ricercaFuzzy(ricerca);
-//		if(this.interrogatore.isValida()) {
-//			CreaRisultati risultati= this.interrogatore.getRisultati();
-//			List<RisultatoDoc> listaRisultati=risultati.getRisultatiDocumenti();
-//			System.out.println(risultati.getTotaleHits());
-//			for(RisultatoDoc ris: listaRisultati) {
-//				System.out.println(ris.getTitolo());
-//				System.out.println(ris.getScore());
-//				for(Coordinate coordinate: ris.getCoordinate()) {
-//					System.out.println(coordinate.toString());
-//				}
-//			}
-//			Collections.sort(listaRisultati, new RisultatatoDocComparatore());
-//			model.addAttribute("listaRisultati", listaRisultati);
-//			model.addAttribute("hits",risultati.getTotaleHits());
-//			return "risultati.html";
-//		}
-//		else {
-//			model.addAttribute("errorCode", this.interrogatore.getErrorCode());
-//			return "searchPage.html";
-//		}
-//	}
+	@RequestMapping(value="/toFind", method= RequestMethod.POST)
+	public String toFind(@RequestParam("search_input") String ricerca, Model model) throws Exception{
+		this.interrogatore.ricercaFuzzy(ricerca);
+		if(this.interrogatore.isValida()) {
+			CreaRisultati risultati= this.interrogatore.getRisultati();
+			List<RisultatoDoc> listaRisultati=risultati.getRisultatiDocumenti();
+			System.out.println(risultati.getTotaleHits());
+			for(RisultatoDoc ris: listaRisultati) {
+				System.out.println(ris.getTitolo());
+				System.out.println(ris.getScore());
+				for(Coordinate coordinate: ris.getCoordinateP()) {
+					System.out.println(coordinate.toString());
+				}
+			}
+			Collections.sort(listaRisultati, new RisultatatoDocComparatore());
+			model.addAttribute("listaRisultati", listaRisultati);
+			model.addAttribute("hits",risultati.getTotaleHits());
+			return "risultati.html";
+		}
+		else {
+			model.addAttribute("errorCode", this.interrogatore.getErrorCode());
+			return "searchPage.html";
+		}
+	}
 
 	
 	
