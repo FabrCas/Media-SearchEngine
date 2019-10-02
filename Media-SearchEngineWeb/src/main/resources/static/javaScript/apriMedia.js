@@ -15,6 +15,6 @@
 	
 	function apri(nomeFile){
 		console.log(nomeFile);
-		window.open("/documents/"+nomeFile , "_blank");
+		window.open("/documents/"+nomeFile+".jpg" , "_blank");
 //		window.open("/documents/highlightYellow.jpg")
 	}
