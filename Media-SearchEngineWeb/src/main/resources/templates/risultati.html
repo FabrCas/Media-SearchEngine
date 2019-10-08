@@ -17,6 +17,7 @@
 				onmouseover="cambiaColoreSopra(this.id)"
 				onmouseout="cambiaColorefuori(this.id)"></span> <span
 				th:text="${risultatoDoc.score}"> Score </span>
+				<span th:text="${risultatoDoc.coordinateD}"> </span>
 
 			<ul style="list-style-type: none;">
 				<li th:each="coordinata: ${risultatoDoc.coordinateP}">

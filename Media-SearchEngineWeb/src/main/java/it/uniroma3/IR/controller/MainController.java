@@ -38,6 +38,13 @@ public class MainController {
 		+ " documenti.\n" + "Con un numero complessivo di trascrizioni pari a: "+this.indicizzatore.getLastId(); 
 	}
 	
+	//chiamata per il documento
+	@RequestMapping(value="/toDoc")
+	@ResponseBody
+	public String toDoc() {
+		return "prova.html";
+	}
+	
 	
 //	@RequestMapping("/prova")
 //	@ResponseBody

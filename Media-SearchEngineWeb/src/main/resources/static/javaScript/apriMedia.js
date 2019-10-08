@@ -15,6 +15,9 @@
 	
 	function apri(nomeFile){
 		console.log(nomeFile);
-		window.open("/documents/"+nomeFile+".jpg" , "_blank");
-//		window.open("/documents/highlightYellow.jpg")
+		//window.location = 'prova.html';
+		//window.open("/documents/"+nomeFile+".jpg" , "_blank");
+		//window.open("/resources/templates/prova.html");
+		var docPage = window.open("");
+		docPage.document.write("<html><head> <meta charset='utf-8'><title>prova</title></head><div>prova riuscita</div><body></body></html>")
 	}
