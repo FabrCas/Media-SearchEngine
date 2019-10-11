@@ -3,15 +3,17 @@
 	xmlns="http://www.w3.org/1999/html">
 <head>
 <meta charset="ISO-8859-1">
+
 <title>Risultati ricerca</title>
 </head>
 <body>
 	<h1>Risultati della ricerca:</h1>
 	<span th:text="${hits}" onload="log()"></span>
-
 	<!-- finch� c'� un prof stampa una lista puntata -->
 	<section th:each="risultatoDoc, stat: ${listaRisultati}">
 		<h4>
+		<a th:href="@{'/toDocumento' + '/' + ${risultatoDoc.titolo}}"
+		th:text="'vai al documento'+ ${risultatoDoc.titolo}"> titolo</a>
 			<span th:id="${stat.index}" th:title="${risultatoDoc.file}"
 				onclick="apri(this.title)" th:text="${risultatoDoc.titolo}"
 				onmouseover="cambiaColoreSopra(this.id)"
@@ -29,7 +31,6 @@
 			</ul>
 		</h4>
 	</section>
-
 	<div>
 		<h1>Ritorna alla home:</h1>
 		<a href="/home"> home </a>
@@ -38,6 +39,10 @@
 	<script type="text/javascript" th:inline="javascript" src="/javaScript/apriMedia.js"></script>	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript" th:inline="javascript">
+	function apri(nomeFile){
+		var popup = window.open('javaScript/prova.html');
+		$(popup.document.body).html('test');
+	}
 	</script>
 </body>
 </html>

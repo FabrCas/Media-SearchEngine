@@ -3,9 +3,13 @@ package it.uniroma3.IR.controller;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +32,8 @@ public class MainController {
 	@Autowired
 	private Interrogatore interrogatore;
 
+	private List<RisultatoDoc> listaRisultatiC;
+	
 	//indicizzazione
 	@RequestMapping(value="/Indexing")
 	@ResponseBody
@@ -37,14 +43,6 @@ public class MainController {
 		return "Indicizzazione completata! \nSono stati indicizzati "+ this.indicizzatore.getCounterDocsIndexed()
 		+ " documenti.\n" + "Con un numero complessivo di trascrizioni pari a: "+this.indicizzatore.getLastId(); 
 	}
-	
-	//chiamata per il documento
-	@RequestMapping(value="/toDoc")
-	@ResponseBody
-	public String toDoc() {
-		return "prova.html";
-	}
-	
 	
 //	@RequestMapping("/prova")
 //	@ResponseBody
@@ -71,6 +69,7 @@ public class MainController {
 			}
 			Collections.sort(listaRisultati, new RisultatatoDocComparatore());
 			model.addAttribute("listaRisultati", listaRisultati);
+			this.listaRisultatiC=listaRisultati;
 			model.addAttribute("hits",risultati.getTotaleHits());
 			return "risultati.html";
 		}
@@ -81,6 +80,12 @@ public class MainController {
 	}
 
 	
+	@RequestMapping(value = "/toDocumento/{titolo}" , method = RequestMethod.GET) ///{titolo}")
+	public String getDocumento(@PathVariable ("titolo") String titolo,Model model) {
+		System.out.println("titolo del file è:"+ titolo );
+		return "prova.html";
+			
+		}
 	
 	@RequestMapping(value = { "/", "/index"})
 	public String index(Model model) {	
