@@ -83,7 +83,17 @@ public class MainController {
 	@RequestMapping(value = "/toDocumento/{titolo}" , method = RequestMethod.GET) ///{titolo}")
 	public String getDocumento(@PathVariable ("titolo") String titolo,Model model) {
 		System.out.println("titolo del file è:"+ titolo );
-		return "prova.html";
+		//ricerca risultati documento selezionato
+		for(RisultatoDoc risultato: this.listaRisultatiC) {
+			if(risultato.getTitolo().equals(titolo)) {
+				model.addAttribute("titolo", risultato.getTitolo());
+				model.addAttribute("nomeFile", risultato.getFile());
+				model.addAttribute("coordinateD", risultato.getCoordinateD());
+				System.out.println(risultato.getCoordinateP());
+				model.addAttribute("coordinateP", risultato.getCoordinateP());
+			}
+		}
+		return "documento.html";
 			
 		}
 	
