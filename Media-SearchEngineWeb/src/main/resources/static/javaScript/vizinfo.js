@@ -1,5 +1,5 @@
 
-function createAreas(div_id, image_path, map_name) {
+function createAreas(div_id, image_path, map_name, page_name, coordD, coordP ) {
   var root_div = document.getElementById(div_id);
   var map_ele = document.createElement("map");
   var img_ele = document.createElement("img");

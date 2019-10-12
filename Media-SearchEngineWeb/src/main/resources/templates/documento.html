@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/html">
+<head>
+<meta charset="ISO-8859-1">
+<title>prova</title>
+</head>
+<h1 id="id" th:text="${titolo}"></h1>
+<body id="body" class="body">
+
+	<div>
+		coordinate documento: <span th:text="${coordinateD}">coordinateD</span>
+	</div>
+	<div>
+		<ul>
+			<li th:each="coordinata : ${coordinateP}">
+				<div>
+					<span th:text="${coordinata}">coordinateP</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="image_map">
+		<span> Documento: </span>
+
+
+	</div>
+	<div>
+		<h1>Ritorna alla home:</h1>
+		<a href="/home"> home </a>
+	</div>
+	<script type="text/javascript" src="/javaScript/jquery.min.js">
+		
+	</script>
+	<script type="text/javascript"
+		src="/javaScript/jquery.maphilight.min.js">
+		
+	</script>
+	<script type="text/javascript" src="/javaScript/vizinfo.js">
+	</script>
+	<script type="text/javascript" th:inline="javascript">
+	
+	var pagina= [[${titolo}]];
+	var coordinateD = [[${coordinateD}]];
+	var coordinateP = [[${coordinateP}]];
+	
+	console.log(pagina);
+	console.log(coordinateD);
+	console.log(coordinateP);
+	
+	  $(function(){
+		  createAreas("image_map", "documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
+	  });
+	</script>
+	
+</body>
+</html>
