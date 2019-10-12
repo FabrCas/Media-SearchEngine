@@ -22,7 +22,7 @@
 	</div>
 	<div id="image_map">
 		<span> Documento: </span>
-
+<!-- tag che verrà riempito con il documento da vizinfo.js -->
 
 	</div>
 	<div>
@@ -49,8 +49,9 @@
 	console.log(coordinateP);
 	
 	  $(function(){
-		  createAreas("image_map", "documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
+		  createAreas("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
 	  });
+	  
 	</script>
 	
 </body>

@@ -1,15 +1,19 @@
-
+//differenza tra il mio codice e quello di partenza, inizialmente voglio creare aree
+//SOLO per le parole trovate dalla ricerca e non tutte
 function createAreas(div_id, image_path, map_name, page_name, coordD, coordP ) {
-  var root_div = document.getElementById(div_id);
+  var root_div = document.getElementById(div_id); //div della pagina documento.html,
+                                                  //  dove verrà caricata l'immagine
   var map_ele = document.createElement("map");
+  // image-map, ovvero un immagine con aree cliccabili
   var img_ele = document.createElement("img");
+  //il documento
 
   map_ele.name = map_name;
   img_ele.src = image_path;
-  img_ele.classList.add('map');
+  img_ele.classList.add('map'); //utilizzo questa classe con maplight
   img_ele.useMap = "#" + map_name;  //attributo necessario al plugin maphilight
 
-  var pagename = image_path.split('/')[1].split('.')[0]; /*prende page? */
+  var pagename = page_name; /*prende page? */
   /*bbxs variabile in scripts/gen_transcriptions_nodup.js*/
   /*Il costruttore Object crea un oggetto avente il valore dato. Se il valore è
   null o undefined, verrà creato un oggetto vuoto; altrimenti un oggetto del tipo
@@ -17,30 +21,32 @@ function createAreas(div_id, image_path, map_name, page_name, coordD, coordP ) {
   senza alcuna modifica.
   /*Object.keys() Restituisce un array contenente i nomi di tutte le proprietà
    enumerabili dell'oggetto.*/
-  var pagekey = Object.keys(bbxs).filter(
-    function(k, i){ return k.startsWith(pagename) })[0];
+  var pagekey = coordD;
     /*ottengo la posizione x dell' area di testo*/
-  var abs_x = Number(pagekey.split('_')[1]);  //Number() costrutor, number-> numeric data typer 64 bit
+  var abs_x = pagekey.x;  //Number() costrutor, number-> numeric data typer 64 bit
   /*ottengo la posizione x dell' area di testo*/
-  var abs_y = Number(pagekey.split('_')[2]);
-  var page_bbxs = bbxs[pagekey]; //ottengo oggetto contenente le coppie chiave valore dei box
+  var abs_y = pagekey.y;
+  console.log(abs_x);
+  console.log(abs_y);
+ //ottengo oggetto contenente le coppie chiave valore dei box in cui c'è stato matching
+  var page_bbxs = coordP;
 
 /*sttuttura del file
 "numPag_xAreaTesto_yAreaTesto_larghezzaAreaTesto_altezzaAreaTesto": {
     "xBoxParola_yBoxParola_larghezzaBoxParola_altezzaBoxParola": "trascrizione1\ntrascrizione2\ntrascrizione3",
 */
 
-
-  Object.keys(page_bbxs).forEach(
-    function(k, i){
+var i=0;
+  coordP.forEach(
+    function(){
       /*costruisco le coordinate*/
-      var coords = k.split('_');
-      var x1 = Number(coords[0]) + abs_x; //xBox parola+ xAreaTesto
-      var y1 = Number(coords[1]) + abs_y;
-      var x2 = x1 + Number(coords[2]);
-      var y2 = y1 + Number(coords[3]);  //angolo opposto all'origine
+      var x1 = page_bbxs.x + abs_x; //xBox parola+ xAreaTesto
+      var y1 = page_bbxs.y + abs_y;
+      var x2 = x1 + page_bbxs.width;
+      var y2 = y1 + page_bbxs.height ;  //angolo opposto all'origine
 
       /*creo un nuovo tag <area> con i valori trovati*/
+      // il tag area permette di definire nuove aree per image map
       var area_ele = document.createElement("area");
       area_ele.shape = 'rect';
       area_ele.coords = x1+","+y1+","+x2+","+y2;
@@ -53,11 +59,11 @@ function createAreas(div_id, image_path, map_name, page_name, coordD, coordP ) {
   position to the top.
   #->primo elemento*/
       area_ele.href = "#";
-      area_ele.title = page_bbxs[k]
+      area_ele.title = coordP[i];
 
       map_ele.appendChild(area_ele);
-    }
-  );
+      i= i+1;
+  });
 
   root_div.appendChild(map_ele);
   root_div.appendChild(img_ele);
