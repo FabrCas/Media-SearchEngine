@@ -44,12 +44,13 @@
 	var coordinateD = [[${coordinateD}]];
 	var coordinateP = [[${coordinateP}]];
 	
-	console.log(pagina);
-	console.log(coordinateD);
-	console.log(coordinateP);
+	//console.log(pagina);
+	//console.log(coordinateD);
+	//console.log(coordinateP);
 	
 	  $(function(){
 		  createAreas("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
+		  $('.map').maphilight({alwaysOn: true}); // {"alwaysOn": true}
 	  });
 	  
 	</script>
