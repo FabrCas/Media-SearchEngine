@@ -38,6 +38,12 @@
 	</script>
 	<script type="text/javascript" src="/javaScript/vizinfo.js">
 	</script>
+	
+	  <script
+    type="text/javascript"
+    src="/javaScript/gen_transcriptions_nodup.js">
+  </script>
+  
 	<script type="text/javascript" th:inline="javascript">
 	
 	var pagina= [[${titolo}]];
@@ -49,8 +55,9 @@
 	//console.log(coordinateP);
 	
 	  $(function(){
-		  createAreas("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
-		  $('.map').maphilight({alwaysOn: true}); // {"alwaysOn": true}
+		  createAreasHit("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
+		  $('.mapHit').maphilight({alwaysOn: true}); // {"alwaysOn": true}
+		  $('.map').maphilight();
 	  });
 	  
 	</script>
