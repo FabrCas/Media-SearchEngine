@@ -8,6 +8,8 @@ function createAreasHit(div_id, image_path, map_name, page_name, coordD, coordP 
   //il documento
 
   map_ele.name = map_name;
+  //map.ele.classList.add('mapHit');
+  img_ele.id
   img_ele.src = image_path;
   img_ele.classList.add('mapHit'); //utilizzo questa classe con maplight
   img_ele.useMap = "#" + map_name;  //attributo necessario al plugin maphilight
@@ -50,8 +52,8 @@ var lunghezza= page_bbxs.length;
       var area_ele = document.createElement("area");
       area_ele.shape = 'rect';
       area_ele.coords = x1+","+y1+","+x2+","+y2;
-      //console.log(x1+","+y1+","+x2+","+y2);
-
+      $(area_ele).data('maphilight', {alwaysOn: true})
+      
 /*The main use of anchor tags - <a></a> - is as hyperlinks. That basically means
  that they take you somewhere. Hyperlinks require the href property, because it
   specifies a location.
@@ -60,23 +62,20 @@ var lunghezza= page_bbxs.length;
   position to the top.
   #->primo elemento*/
       area_ele.href = "#";
-
       map_ele.appendChild(area_ele);
   }
 
 
-  root_div.appendChild(map_ele);
-  root_div.appendChild(img_ele);
-  //createAreas(root_div, image_path,img_ele, map_name, map_ele);
+  createAreas(root_div, image_path,img_ele, map_ele);
 }
 
 // $("area").filter( function(i){ return $(this).attr( "title" ).includes("latin") }).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');
 
 //funzione per evidenziare e avere info delle trascrizioni passando il cursore sopra i boxes
-function createAreas(root_div, image_path, img_ele ,map_name, map_ele1) {
+function createAreas(root_div, image_path, img_ele, map_ele) {
 	
-	 var map_ele = document.createElement("map");
-	  img_ele.classList.add('map');
+	 //var map_ele2 = document.createElement("map");
+	  //img_ele.classList.add('mapHit');
 
 	  var pagename = image_path.split('/')[2].split('.')[0]; /*prende page? */
 	  console.log(pagename);
@@ -123,13 +122,15 @@ function createAreas(root_div, image_path, img_ele ,map_name, map_ele1) {
 	  position to the top.
 	  #->primo elemento*/
 	      area_ele.href = "#";
-	      area_ele.title = page_bbxs[k]
-
-	      map_ele.appendChild(area_ele);
+	      area_ele.title = page_bbxs[k];
+	      console.log(area_ele);
+	    //  $.maphilight.defaults;
+	    $(area_ele).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');
+	     map_ele.appendChild(area_ele);
 	    }
 	  );
+	 
 
-	  root_div.appendChild(map_ele1);
 	  root_div.appendChild(map_ele);
 	  root_div.appendChild(img_ele);
 	}
