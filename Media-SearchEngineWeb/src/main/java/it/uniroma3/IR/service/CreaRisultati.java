@@ -63,6 +63,7 @@ public class CreaRisultati {
 				}
 				//costruisco le coordinate di questa trascrizione
 				Box boxParola= new Box();
+			//	boxParola.setRiga(Integer.parseInt(d.get("riga")));
 				boxParola.setX(Long.parseLong(d.get("xP")));
 				boxParola.setY(Long.parseLong(d.get("yP")));
 				boxParola.setWidth(Long.parseLong(d.get("wP")));

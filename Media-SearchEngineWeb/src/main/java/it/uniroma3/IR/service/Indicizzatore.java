@@ -42,9 +42,11 @@ public class Indicizzatore {
     private Analyzer analyzer;
 	private IndexWriterConfig iwc;
     private IndexWriter writer ;
+    
+    /*progressivo per il numero di pagine (documenti)*/
     private int counterDocsIndexed;
     
-	/*L'analizzatore identifica in modo univoco i documenti che analizza*/
+	/*L'analizzatore identifica in modo univoco le trascrizioni che analizza*/
     private Long id;
     
     /*utilità*/
@@ -116,13 +118,7 @@ public class Indicizzatore {
     		List <String> coordinateDocumento = new ArrayList<String>();
 
     		String documentoInfo= (String) iteratore.next();
- //   		System.out.println(documentoInfo);
     		String titoloDocumento= this.elaboratore.elaboraInfoDocumento(documentoInfo, coordinateDocumento );
-    		//Document document = new Document();
-//    		System.out.println(titoloDocumento);
-//    		for(String a: coordinateDocumento) {
-//    			System.out.println("*"+ a);
-//    		}
     		this.counterDocsIndexed++;
     		JSONObject paroleDocumento =  (JSONObject) pagineDocumento.get(documentoInfo);
     		this.scorriPagina(paroleDocumento, titoloDocumento, coordinateDocumento);
@@ -157,15 +153,15 @@ public class Indicizzatore {
     
     private void scorriTrascrizioni(String trascrizioni, String titoloDoc, List<String> coordDoc,
     		List<String> coordParola, Long id) {
+ 
+  
     	String contenutoParola= "";
     	contenutoParola = this.elaboratore.getContenutoTrascrizione(trascrizioni);
     	//System.out.println(contenutoParola+ " id-> "+ id);
-    	this.indicizzaTrascrizione(titoloDoc, coordDoc,  contenutoParola, coordParola, id );
+    	this.indicizzaTrascrizione(titoloDoc, coordDoc,  contenutoParola, coordParola, id);
     	
     }
     
-
-
     //scelgo l'indicizzazione per trascrizione rispetto a quella per documento
     private void indicizzaTrascrizione(String titoloDocumento, List<String> coordinateDocumento, String TrascrizioniParola,
     		List<String> coordinateParola,Long id) {
@@ -181,6 +177,7 @@ public class Indicizzatore {
             document.add(new StoredField("hD", coordinateDocumento.get(3)));
             /*info parola*/
             document.add(new TextField("contents", TrascrizioniParola, Field.Store.YES)); 
+           // document.add(new StoredField("riga", String.valueOf(riga)));
             document.add(new StoredField("xP", coordinateParola.get(0)));
             document.add(new StoredField("yP", coordinateParola.get(1)));
             document.add(new StoredField("wP", coordinateParola.get(2)));

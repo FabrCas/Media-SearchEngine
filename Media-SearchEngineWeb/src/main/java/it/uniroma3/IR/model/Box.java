@@ -1,8 +1,11 @@
 package it.uniroma3.IR.model;
 /*
- * trascriptions è una attributo che può essere vuoto,
+ * trascriptions e riga sono attributi non obbligatori,
  * come nel caso in cui questo classe modelli il box del testo dell'intero
- * documento, dove il campo trascrizioni non è necessario, quindi è omesso
+ * documento, dove il campo trascrizioni non è necessario e nemmeno quello
+ * della riga , quindi sono omessi 
+ * possibile idea: superclasse->box 
+ *                 sottoclasse->box trascrizione
  * dal toString()
  */
 public class Box {
@@ -10,15 +13,16 @@ public class Box {
 	private Long y;
 	private Long width;
 	private Long height;
-	private String trascriptions;
-
 	
-	public Box(Long x, Long y, Long width, Long height, String trascriptions) {
+	/*variabili non obbligatorie*/
+	private String trascriptions;
+	private int riga;
+	
+	public Box(Long x, Long y, Long width, Long height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		//this.trascriptions= trascriptions;
 	}
 	
 	public Box() {
@@ -51,11 +55,6 @@ public class Box {
 				return false;
 		} else if (!height.equals(other.height))
 			return false;
-		if (trascriptions == null) {
-			if (other.trascriptions != null)
-				return false;
-		} else if (!trascriptions.equals(other.trascriptions))
-			return false;
 		if (width == null) {
 			if (other.width != null)
 				return false;
@@ -81,6 +80,8 @@ public class Box {
 		return "Box [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
 	}
 
+	
+	/*setter & getters obbligatori*/
 	public Long getX() {
 		return x;
 	}
@@ -106,6 +107,8 @@ public class Box {
 		this.height = height;
 	}
 	
+	
+	/*setter & getters obbligatori*/
 	public String getTrascriptions() {
 		return trascriptions;
 	}
@@ -114,6 +117,12 @@ public class Box {
 		this.trascriptions = trascriptions;
 	}
 	
+	public int getRiga() {
+		return riga;
+	}
 
+	public void setRiga(int riga) {
+		this.riga = riga;
+	}
 
 }
