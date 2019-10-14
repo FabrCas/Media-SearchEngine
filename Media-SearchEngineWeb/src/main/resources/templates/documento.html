@@ -13,9 +13,9 @@
 	</div>
 	<div>
 		<ul>
-			<li th:each="coordinata : ${coordinateP}">
+			<li th:each="box : ${boxP}">
 				<div>
-					<span th:text="${coordinata}">coordinateP</span>
+					<span th:text="${box} + '[' + ${box.trascriptions} + ']'">coordinateP</span>
 				</div>
 			</li>
 		</ul>
@@ -48,14 +48,14 @@
 	
 	var pagina= [[${titolo}]];
 	var coordinateD = [[${coordinateD}]];
-	var coordinateP = [[${coordinateP}]];
+	var boxP = [[${boxP}]];  //null(?)
 	
 	//console.log(pagina);
 	//console.log(coordinateD);
-	//console.log(coordinateP);
+	console.log(boxP);
 	
 	  $(function(){
-		  createAreasHit("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, coordinateP);
+		  createAreasHit("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, boxP);
 		  $('.mapHit').maphilight(); // {"alwaysOn": true}
 	  });
 	  

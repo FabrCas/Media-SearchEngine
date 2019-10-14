@@ -22,7 +22,7 @@
 				<span th:text="${risultatoDoc.coordinateD}"> </span>
 
 			<ul style="list-style-type: none;">
-				<li th:each="coordinata: ${risultatoDoc.coordinateP}">
+				<li th:each="coordinata: ${risultatoDoc.boxP}">
 				<span th:text="'|x: '+${coordinata.x} +'|' " onclick="stampa()"> x </span>
 				<span th:text="'|y: '+ ${coordinata.y} +'|'" onclick="stampa()"> y </span>
 				<span th:text="'|w: '+ ${coordinata.width} +'|'" onclick="stampa()"> w </span>

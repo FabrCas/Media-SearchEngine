@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.uniroma3.IR.comparatore.RisultatatoDocComparatore;
-import it.uniroma3.IR.model.Coordinate;
+import it.uniroma3.IR.model.Box;
 import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
@@ -61,7 +61,7 @@ public class MainController {
 			for(RisultatoDoc ris: listaRisultati) {
 				System.out.println(ris.getTitolo());
 				System.out.println(ris.getScore());
-				for(Coordinate coordinate: ris.getCoordinateP()) {
+				for(Box coordinate: ris.getBoxP()) {
 					System.out.println(coordinate.toString());
 				}
 			}
@@ -87,7 +87,7 @@ public class MainController {
 				model.addAttribute("titolo", risultato.getTitolo());
 				model.addAttribute("nomeFile", risultato.getFile());
 				model.addAttribute("coordinateD", risultato.getCoordinateD());
-				model.addAttribute("coordinateP", risultato.getCoordinateP());
+				model.addAttribute("boxP", risultato.getBoxP());
 			}
 		}
 		return "documento.html";

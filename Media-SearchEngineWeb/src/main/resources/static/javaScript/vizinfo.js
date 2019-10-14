@@ -52,6 +52,7 @@ var lunghezza= page_bbxs.length;
       var area_ele = document.createElement("area");
       area_ele.shape = 'rect';
       area_ele.coords = x1+","+y1+","+x2+","+y2;
+      area_ele.title = page_bbxs[i].trascriptions
       $(area_ele).data('maphilight', {alwaysOn: true})
       
 /*The main use of anchor tags - <a></a> - is as hyperlinks. That basically means

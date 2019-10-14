@@ -12,7 +12,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 
-import it.uniroma3.IR.model.Coordinate;
+import it.uniroma3.IR.model.Box;
 import it.uniroma3.IR.model.RisultatoDoc;
 
 
@@ -48,7 +48,7 @@ public class CreaRisultati {
 					risultatoParziale.setFile(nomeFile);
 					risultatoParziale.setTitolo(getNomeDocumento(nomeFile));
 					risultatoParziale.setScore(Float.parseFloat(modificaScore(score.toString()))); 
-					Coordinate coordinateDocumento= new Coordinate();
+					Box coordinateDocumento= new Box();
 					coordinateDocumento.setX(Long.parseLong(d.get("xD")));
 					coordinateDocumento.setY(Long.parseLong(d.get("yD")));
 					coordinateDocumento.setWidth(Long.parseLong(d.get("wD")));
@@ -62,12 +62,14 @@ public class CreaRisultati {
 					risultatoParziale.addScore(Float.parseFloat(modificaScore((score.toString())))); 
 				}
 				//costruisco le coordinate di questa trascrizione
-				Coordinate coordinataParola= new Coordinate();
-				coordinataParola.setX(Long.parseLong(d.get("xP")));
-				coordinataParola.setY(Long.parseLong(d.get("yP")));
-				coordinataParola.setWidth(Long.parseLong(d.get("wP")));
-				coordinataParola.setHeight(Long.parseLong(d.get("hP")));
-				risultatoParziale.addCoordinateP(coordinataParola);
+				Box boxParola= new Box();
+				boxParola.setX(Long.parseLong(d.get("xP")));
+				boxParola.setY(Long.parseLong(d.get("yP")));
+				boxParola.setWidth(Long.parseLong(d.get("wP")));
+				boxParola.setHeight(Long.parseLong(d.get("hP")));
+				boxParola.setTrascriptions(d.get("contents"));
+				System.out.println((d.get("contents")));
+				risultatoParziale.addBoxP(boxParola);
 				this.mappingRisultatiPerNomeDoc.put(nomeFile, risultatoParziale);
 				//risultatoParziale.setScore(modificaScore((score.toString())));
 			} catch (IOException e) {

@@ -63,7 +63,6 @@ public class ElaboraCampi {
 			}
 			i++;
 		}
-		// TODO Auto-generated method stub
 		scanner.close();
 		return titolo;
 	}

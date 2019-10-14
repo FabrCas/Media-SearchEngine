@@ -8,11 +8,11 @@ public class RisultatoDoc{
 	private String titolo;
 	private float score;
 	private String file;
-	private Coordinate coordinateD;
-	private List<Coordinate> coordinateP;
+	private Box coordinateD;
+	private List<Box> boxP;
 	
 	public RisultatoDoc() {
-		this.coordinateP= new ArrayList<Coordinate>();
+		this.boxP= new ArrayList<Box>();
 	}
 	
 	public String getTitolo() {
@@ -47,23 +47,23 @@ public class RisultatoDoc{
 		this.file = nomeFile;
 	}
 	
-	public List<Coordinate> getCoordinateP() {
-		return coordinateP;
+	public List<Box> getBoxP() {
+		return this.boxP;
 	}
 
-	public void addCoordinateP(Coordinate coordinata) {
-		this.coordinateP.add(coordinata);
+	public void addBoxP(Box box) {
+		this.boxP.add(box);
 	}
 	
-	public void setCoordinateP(List<Coordinate> coordinateP) {
-		this.coordinateP = coordinateP;
+	public void setBoxP(List<Box> boxP) {
+		this.boxP = boxP;
 	}
 
-	public Coordinate getCoordinateD() {
+	public Box getCoordinateD() {
 		return coordinateD;
 	}
 
-	public void setCoordinateD(Coordinate coordinateT) {
+	public void setCoordinateD(Box coordinateT) {
 		this.coordinateD = coordinateT;
 	}
 
