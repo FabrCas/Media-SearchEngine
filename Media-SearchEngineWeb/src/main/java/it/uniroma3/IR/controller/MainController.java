@@ -69,6 +69,7 @@ public class MainController {
 			model.addAttribute("listaRisultati", listaRisultati);
 			this.listaRisultatiC=listaRisultati;
 			model.addAttribute("hits",risultati.getTotaleHits());
+			model.addAttribute("documenti", risultati.getDocumentiConRiscontri());
 			return "risultati.html";
 		}
 		else {

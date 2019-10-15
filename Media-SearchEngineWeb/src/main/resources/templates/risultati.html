@@ -6,24 +6,93 @@
 
 <title>Risultati ricerca</title>
 </head>
+
 <body>
+<!--  
+<script type="text/javascript" th:inline="javascript">
+function caricamento(){
+var documenti= [[${documenti}]];
+let images= [];
+documenti.forEach(function(name){
+    image = new Image();   // create image
+    image.title= name;
+    image.src = "/documents/" + name + ".jpg";      // set the src
+    images.push(image);    // push it onto the image array
+});
+}
+
+console.log (images);
+
+console.log(documenti);
+</script> -->
+
+
+
 	<h1>Risultati della ricerca:</h1>
 	<span th:text="${hits}" onload="log()"></span>
-	<!-- finch� c'� un prof stampa una lista puntata -->
 	<section th:each="risultatoDoc, stat: ${listaRisultati}">
 		<h4>
-		<a th:href="@{'/toDocumento' + '/' + ${risultatoDoc.titolo}}"
-		th:text="${risultatoDoc.titolo}"> titolo</a> <span
+			<a th:href="@{'/toDocumento' + '/' + ${risultatoDoc.titolo}}"
+				th:text="${risultatoDoc.titolo}"> titolo</a> <span
 				th:text="${risultatoDoc.score}"> Score </span> <span
 				th:text="${risultatoDoc.coordinateD}"> </span>
 
 			<ul style="list-style-type: none;">
-				<li th:each="coordinata: ${risultatoDoc.boxP}">
-				<span th:text="'|x: '+${coordinata.x} +'|' " > x </span>
-				<span th:text="'|y: '+ ${coordinata.y} +'|'" > y </span>
-				<span th:text="'|w: '+ ${coordinata.width} +'|'" > w </span>
-				<span th:text="'|h: '+ ${coordinata.height} +'|'"> h </span>
-					</li>
+				<li th:each="coordinata, stat: ${risultatoDoc.boxP}">
+					<div>
+						<!-- <img th:src="'/documents/' + ${risultatoDoc.titolo} + '.jpg'"
+							width="100" height="140"> -->
+
+						<canvas th:id="${stat.index} + ${risultatoDoc.titolo}"
+							style="border: 1px solid; width: 1000px; height: 200px;"> your browser doesn't support the canvas tag
+							</canvas>
+							
+<script type="text/javascript" th:inline="javascript">
+	var titolo= [[${risultatoDoc.titolo}]];   //ok
+	var indice= [[${stat.index}]];    //ok 
+	var src= "/documents/" + titolo + ".jpg";   //ok
+	
+	var canvas= document.getElementById(indice+titolo);  //ok
+	
+	
+	canvas.width= canvas.scrollWidth;   //OK
+	canvas.height= canvas.scrollHeight; //OK
+	
+	
+	var ctx = canvas.getContext('2d'); //ok
+	
+	//ctx.clearRect(0, 0, canvas.width, canvas.height);
+	/*var image;
+	var lunghezza= images.length; 
+	console.log(lunghezza);
+	for (i = 0; i < lunghezza; i++) {
+	  if(images[i].title= titolo)
+	  image= images[i];
+	} */
+	var image = new Image();
+	
+	image.src= "/documents/prova.jpg";
+	
+	image.onload = function(){	
+		console.log( titolo + " in caricamento");
+	ctx.drawImage(image, 0, 0, image.naturalWidth,image.naruralHeight );//, 0,0, image.naturalWidth/2, image.naruralHeight/2, 10, 10, 198, 108); 
+	};
+	
+	image.abort = function(){
+		console.log("caricamento fallito");
+	};
+	
+</script>
+
+
+
+						<span th:text="${risultatoDoc.titolo}"> nome file </span> <span
+							th:text="'|x: '+${coordinata.x} +'|' "> x </span> <span
+							th:text="'|y: '+ ${coordinata.y} +'|'"> y </span> <span
+							th:text="'|w: '+ ${coordinata.width} +'|'"> w </span> <span
+							th:text="'|h: '+ ${coordinata.height} +'|'"> h </span>
+					</div>
+				</li>
 			</ul>
 		</h4>
 	</section>
@@ -32,10 +101,11 @@
 		<a href="/home"> home </a>
 	</div>
 
-	<script type="text/javascript" th:inline="javascript" src="/javaScript/apriMedia.js"></script>	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script type="text/javascript" th:inline="javascript">
+	<script type="text/javascript" th:inline="javascript"
+		src="/javaScript/apriMedia.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	
-	</script>
+
 </body>
 </html>

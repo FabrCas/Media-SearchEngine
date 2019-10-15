@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.IndexSearcher;
@@ -101,6 +102,11 @@ public class CreaRisultati {
 		}
 		scanner.close();
 		return scoreMod;
+	}
+	
+	//utilizzato per risolvere il problema del caricamento dei file nella pagina dei risultati
+	public  Set<String> getDocumentiConRiscontri() {
+		return  this.mappingRisultatiPerNomeDoc.keySet();
 	}
 	
 //	private String getPagina(String nomeFile) {
