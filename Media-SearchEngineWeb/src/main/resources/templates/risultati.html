@@ -8,9 +8,20 @@
 </head>
 
 <body>
-	<script type="text/javascript">
-    image = new Image();   // create image
-    image.src = "/documents/prova.jpg";      // set the src
+	<script type="text/javascript" th:inline="javascript">
+	var documenti= [[${documenti}]];
+	let images= [];
+	documenti.forEach(function(name){
+	    image = new Image();   // create image
+	    image.title= name;
+	    image.src = "/documents/" + name + ".jpg";      // set the src
+	    images.push(image);    // push it onto the image array
+	});
+	 image = new Image();
+	 image.src= "./documents/prova.jpg";
+	 image.title= "prova";
+	 images.push(image);
+	
 </script>
 	<h1>Risultati della ricerca:</h1>
 	<span th:text="${hits}" onload="log()"></span>
@@ -28,13 +39,14 @@
 							width="100" height="140"> -->
 
 						<canvas th:id="${stat.index} + ${risultatoDoc.titolo}"
-							style="border: 1px solid; width: 1000px; height: 200px;"> your browser doesn't support the canvas tag
+							style="border: 1px solid; width: 1400px; height: 100px;"> your browser doesn't support the canvas tag
 							</canvas>
 
 						<script type="text/javascript" th:inline="javascript">
 	var titolo= [[${risultatoDoc.titolo}]];   //ok
+	
 	var indice= [[${stat.index}]];    //ok 
-	var src= "/documents/" + titolo + ".jpg";   //ok
+	//var src= "/documents/" + titolo + ".jpg";   //ok
 	
 	var canvas= document.getElementById(indice+titolo);  //ok
 	
@@ -46,23 +58,22 @@
 	var ctx = canvas.getContext('2d'); //ok
 	
 	//ctx.clearRect(0, 0, canvas.width, canvas.height);
-	/*var image;
+	var imageCor;
 	var lunghezza= images.length; 
-	console.log(lunghezza);
 	for (i = 0; i < lunghezza; i++) {
-	  if(images[i].title= titolo)
-	  image= images[i];
-	} */
-	//var image = new Image();
-	//ctx.fillText(titolo, 10, 50);
+	  if(images[i].title== titolo){
+	  imageCor= images[i];
+	  console.log(images[i].title);
+	  }
+	} 
 	
-	ctx.drawImage(image, 0, 0);
+	//var image = new Image();
+	ctx.drawImage(imageCor, 0, 0, 100, 100);
 	//image.onload = function(){	
 
 	//ctx.drawImage(image, 0, 0);//, 0,0, image.naturalWidth/2, image.naruralHeight/2, 10, 10, 198, 108); 
 	//};
 	
-	//image.src= "./documents/prova.jpg";
 	
 </script>
 						<span th:text="${risultatoDoc.titolo}"> nome file </span> <span
