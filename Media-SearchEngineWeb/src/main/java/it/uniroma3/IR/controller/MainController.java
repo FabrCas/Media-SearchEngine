@@ -42,14 +42,6 @@ public class MainController {
 		+ " documenti.\n" + "Con un numero complessivo di trascrizioni pari a: "+this.indicizzatore.getLastId(); 
 	}
 	
-//	@RequestMapping("/prova")
-//	@ResponseBody
-//	public String stampa() {
-//		String stringa= "Print try";
-//		System.out.println(stringa);
-//		return stringa;
-//	}
-	 
 	//interrogazione
 	@RequestMapping(value="/toFind", method= RequestMethod.POST)
 	public String toFind(@RequestParam("search_input") String ricerca, Model model) throws Exception{

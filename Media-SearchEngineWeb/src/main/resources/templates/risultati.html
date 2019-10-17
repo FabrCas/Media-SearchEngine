@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/html">
@@ -9,24 +8,11 @@
 </head>
 
 <body>
-
-	<script type="text/javascript" th:inline="javascript">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script async type="text/javascript" th:inline="javascript" src="/javaScript/caricaMedia.js">
 	var documenti= [[${documenti}]];
-	let images= [];
-	documenti.forEach(function(name){
-	    image = new Image();   // create image
-	    image.title= name;
-	    image.onload= function (){
-	    	//per permettere il caricamento dei media 
-	    	console.log("caricato");   // set the src
-	    	//window.stop();
-	    }
-	    image.src = "/documents/" + name + ".jpg";
-	    images.push(image);    // push it onto the image array
-	});
-			
-</script>
+	caricaMedia(documenti);</script>
+	
 	<h1>Risultati della ricerca:</h1>
 	<span th:text="${hits}" onload="log()"></span>
 	<section th:each="risultatoDoc, stat: ${listaRisultati}">
@@ -46,63 +32,15 @@
 							style="border: 1px solid; width: 1200px; height: 50px;"> your browser doesn't support the canvas tag
 							</canvas>
 
-	<script type="text/javascript" th:inline="javascript">
-
-	var titolo= [[${risultatoDoc.titolo}]];   
-	var indice= [[${stat.index}]];    
-	var box= [[${coordinata}]];    
-	var testo= [[${risultatoDoc.coordinateD}]];  
-	
-	//console.log(testo);
-	//console.log(box);
-	
-	/*riferimento all'elemento html canvas*/
-	var canvas= document.getElementById(indice+titolo); 
-	
-	canvas.width= canvas.scrollWidth;   
-	canvas.height= canvas.scrollHeight; 
-	/* riferimento al contesto api 2D */
-	var ctx = canvas.getContext('2d'); 
-	
-	var imageCor;
-	var imageSel;
-	var lunghezza= images.length;
-	
-	function getImage(){
-	for (i = 0; i < lunghezza; i++) {
-	  if(images[i].title== titolo){
-	  imageSel= images[i];
-	  return imageSel;
-	 // console.log(images[i].title);
-	  }
-	}
-	}
-		
-	imageCor= getImage();
-
-	var y= box.y + testo.y;
-	var x= testo.x;
-	var larghezza= testo.width;
-	var altezza= box.height + 5 ; //margine per righe più storte
-	console.log("*******************************");
-	console.log(x);
-	console.log(y);
-	console.log(larghezza);
-	console.log(altezza);
-	console.log("*******************************");
-	
-	
-	//quando ci saranno le righe: se riga è 1, sfasare la y
-	ctx.drawImage(imageCor, -(x+90) , -y);
-//	imageCor.onload = function (){
-		//ctx.drawImage(imageCor, 0, 0);
-		//ctx.fillText(imageCor.src);
-		
-	//ctx.drawImage(imageCor, x, y, larghezza/2, altezza/2, 0, 0, canvas.width, canvas.height ); //,larghezza, altezza );
-	//}
-
-	//ctx.drawImage(imageCor, 0, y, larghezza , altezza);
-</script>
+						<script type="text/javascript" th:inline="javascript" src="/javaScript/riempiCanvas.js">
+						var titolo= [[${risultatoDoc.titolo}]];   
+						var indice= [[${stat.index}]];    
+						var box= [[${coordinata}]];    
+						var testo= [[${risultatoDoc.coordinateD}]];  
+						riempiCanvas(titolo, indice, box, testo);
+						</script>
+						
+						
 						<span th:text="${risultatoDoc.titolo}"> nome file </span> <span
 							th:text="'|x: '+${coordinata.x} +'|' "> x </span> <span
 							th:text="'|y: '+ ${coordinata.y} +'|'"> y </span> <span
@@ -117,8 +55,7 @@
 		<h1>Ritorna alla home:</h1>
 		<a href="/home"> home </a>
 	</div>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
 	<script type="text/javascript" th:inline="javascript"
 		src="/javaScript/apriMedia.js"></script>
 

@@ -109,11 +109,4 @@ public class CreaRisultati {
 		return  this.mappingRisultatiPerNomeDoc.keySet();
 	}
 	
-//	private String getPagina(String nomeFile) {
-//		String nomePagina;
-//		nomePagina= nomeFile.replace(".json", ".jpg");
-//		return nomePagina;
-//	}
-	
-
 }

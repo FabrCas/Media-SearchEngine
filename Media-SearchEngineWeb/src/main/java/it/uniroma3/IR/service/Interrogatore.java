@@ -78,8 +78,14 @@ public class Interrogatore {
 		
 		/*secondo modo:*/
 		QueryParser qp= new QueryParser("contents", new StandardAnalyzer());
-		Query fuzzyQuery= qp.parse(testo+"~2");
-		
+		Query fuzzyQuery;
+		if(testo.length() <=4) {
+			fuzzyQuery= qp.parse(testo+"~1");	
+		}
+		else {
+			fuzzyQuery= qp.parse(testo+"~2");
+		}
+
 		//di default lucene fa l'OR tra le i vari termini della query
 		//wildcard auto implementate, sintassi:
 		//rimpiazzamento di un singolo carattere ->? 
