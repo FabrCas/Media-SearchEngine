@@ -1,6 +1,6 @@
 
 function riempiCanvas(titolo, indice, box, testo, images){
-	$(document).ready(function(){
+	$(window).on("load", function() {
 		//riferimento all'elemento html canvas
 		var canvas= document.getElementById(indice+titolo); 
 
@@ -20,7 +20,7 @@ function riempiCanvas(titolo, indice, box, testo, images){
 			}
 		}
 		imageCor= getImage();
-		
+
 		var y= box.y + testo.y;
 		var x= testo.x;
 		//var larghezza= testo.width;
@@ -32,8 +32,6 @@ function riempiCanvas(titolo, indice, box, testo, images){
 			y= y+35;
 		}
 
-		$(window).on("load", function() {
-			ctx.drawImage(imageCor, -(x+90) , -y);
-		});
+		ctx.drawImage(imageCor, -(x+90) , -y);
 	});
 }
