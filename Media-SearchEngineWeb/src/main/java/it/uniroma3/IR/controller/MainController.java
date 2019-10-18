@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.uniroma3.IR.comparatore.RisultatatoDocComparatore;
-import it.uniroma3.IR.model.Box;
+import it.uniroma3.IR.model.BoxTrascrizione;
 import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
@@ -53,7 +53,7 @@ public class MainController {
 			for(RisultatoDoc ris: listaRisultati) {
 				System.out.println(ris.getTitolo());
 				System.out.println(ris.getScore());
-				for(Box coordinate: ris.getBoxP()) {
+				for(BoxTrascrizione coordinate: ris.getBoxP()) {
 					System.out.println(coordinate.toString());
 				}
 			}

@@ -14,6 +14,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 
 import it.uniroma3.IR.model.Box;
+import it.uniroma3.IR.model.BoxTrascrizione;
 import it.uniroma3.IR.model.RisultatoDoc;
 
 
@@ -63,7 +64,7 @@ public class CreaRisultati {
 					risultatoParziale.addScore(Float.parseFloat(modificaScore((score.toString())))); 
 				}
 				//costruisco le coordinate di questa trascrizione
-				Box boxParola= new Box();
+				BoxTrascrizione boxParola= new BoxTrascrizione();
 			//	boxParola.setRiga(Integer.parseInt(d.get("riga")));
 				boxParola.setX(Long.parseLong(d.get("xP")));
 				boxParola.setY(Long.parseLong(d.get("yP")));

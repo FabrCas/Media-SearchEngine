@@ -1,22 +1,16 @@
 package it.uniroma3.IR.model;
+
 /*
- * trascriptions e riga sono attributi non obbligatori,
- * come nel caso in cui questo classe modelli il box del testo dell'intero
- * documento, dove il campo trascrizioni non è necessario e nemmeno quello
- * della riga , quindi sono omessi 
- * possibile idea: superclasse->box 
- *                 sottoclasse->box trascrizione
- * dal toString()
+ * Classe che modella le informazioni relative a un box,
+ * quindi x, y, larghezza, altezza
+ * 
  */
+
 public class Box {
 	private Long x;
 	private Long y;
 	private Long width;
 	private Long height;
-	
-	/*variabili non obbligatorie*/
-	private String trascriptions;
-	private int riga;
 	
 	public Box(Long x, Long y, Long width, Long height) {
 		this.x = x;
@@ -24,7 +18,7 @@ public class Box {
 		this.width = width;
 		this.height = height;
 	}
-	
+
 	public Box() {
 	}
 	
@@ -33,7 +27,6 @@ public class Box {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((height == null) ? 0 : height.hashCode());
-		result = prime * result + ((trascriptions == null) ? 0 : trascriptions.hashCode());
 		result = prime * result + ((width == null) ? 0 : width.hashCode());
 		result = prime * result + ((x == null) ? 0 : x.hashCode());
 		result = prime * result + ((y == null) ? 0 : y.hashCode());
@@ -73,15 +66,13 @@ public class Box {
 		return true;
 	}
 	
-	
 
 	@Override
 	public String toString() {
 		return "Box [x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + "]";
 	}
 
-	
-	/*setter & getters obbligatori*/
+	/*inizio setter & getters*/
 	public Long getX() {
 		return x;
 	}
@@ -106,23 +97,6 @@ public class Box {
 	public void setHeight(Long height) {
 		this.height = height;
 	}
+	/*fine setter & getters*/
 	
-	
-	/*setter & getters obbligatori*/
-	public String getTrascriptions() {
-		return trascriptions;
-	}
-
-	public void setTrascriptions(String trascriptions) {
-		this.trascriptions = trascriptions;
-	}
-	
-	public int getRiga() {
-		return riga;
-	}
-
-	public void setRiga(int riga) {
-		this.riga = riga;
-	}
-
 }
