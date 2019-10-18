@@ -8,15 +8,16 @@
 </head>
 
 <body>
-
+	<!-- inzio caricamento librerie  -->
 	<script type="text/javascript" src="/javaScript/jquery.min.js">
 	</script>
 
 	<script type="text/javascript" src="/javaScript/caricaMedia.js">
 	</script>
-	
+
 	<script type="text/javascript" src="/javaScript/riempiCanvas.js">
 	</script>
+	<!-- fine caricamento librerie  -->
 
 	<script type="text/javascript" th:inline="javascript">
 	/*carico le immagini necessarie per realizzare gli snippets*/
@@ -39,9 +40,9 @@
 						<canvas th:id="${stat.index} + ${risultatoDoc.titolo}"
 							style="border: 1px solid; width: 1200px; height: 50px;"> your browser doesn't support the canvas tag
 							</canvas>
-						
+
 						<script type="text/javascript" th:inline="javascript">
-	
+						
 		/*carico le info sui boxes e gli id delle canvas*/
 		var titolo= [[${risultatoDoc.titolo}]];   
 		var indice= [[${stat.index}]];    
@@ -49,9 +50,8 @@
 		var testo= [[${risultatoDoc.coordinateD}]];
 		
 		riempiCanvas(titolo, indice, box, testo, images);
-
- 
-</script>
+		
+		</script>
 						<span th:text="${risultatoDoc.titolo}"> nome file </span> <span
 							th:text="'|x: '+${coordinata.x} +'|' "> x </span> <span
 							th:text="'|y: '+ ${coordinata.y} +'|'"> y </span> <span
@@ -66,9 +66,5 @@
 		<h1>Ritorna alla home:</h1>
 		<a href="/home"> home </a>
 	</div>
-
-	<script type="text/javascript" th:inline="javascript"
-		src="/javaScript/apriMedia.js"></script>
-
 </body>
 </html>

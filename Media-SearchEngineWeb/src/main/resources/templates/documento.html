@@ -7,53 +7,38 @@
 </head>
 <h1 id="id" th:text="${titolo}"></h1>
 <body id="body" class="body">
-<!--  
-	<div>
-		coordinate documento: <span th:text="${coordinateD}">coordinateD</span>
-	</div>
-	<div>
-		<ul>
-			<li th:each="box : ${boxP}">
-				<div>
-					<span th:text="${box} + '[' + ${box.trascriptions} + ']'">coordinateP</span>
-				</div>
-			</li>
-		</ul>
-	</div>
-	-->
 	<div id="image_map">
 		<span> Documento: </span>
-<!-- tag che verrà riempito con il documento da vizinfo.js -->
+		<!-- tag che verrà riempito con il documento da vizinfo.js -->
 
 	</div>
 	<div>
 		<h1>Ritorna alla home:</h1>
 		<a href="/home"> home </a>
 	</div>
+
+	<!-- inzio caricamento librerie  -->
 	<script type="text/javascript" src="/javaScript/jquery.min.js">
-		
 	</script>
+
 	<script type="text/javascript"
 		src="/javaScript/jquery.maphilight.min.js">
-		
 	</script>
+
 	<script type="text/javascript" src="/javaScript/vizinfo.js">
 	</script>
-	
-	  <script
-    type="text/javascript"
-    src="/javaScript/gen_transcriptions_nodup.js">
+
+	<script type="text/javascript"
+		src="/javaScript/gen_transcriptions_nodup.js">
   </script>
-  
+
+	<!-- fine caricamento librerie  -->
+
 	<script type="text/javascript" th:inline="javascript">
 	
 	var pagina= [[${titolo}]];
 	var coordinateD = [[${coordinateD}]];
 	var boxP = [[${boxP}]];  //null(?)
-	
-	//console.log(pagina);
-	//console.log(coordinateD);
-	console.log(boxP);
 	
 	  $(function(){
 		  createAreasHit("image_map", "/documents/" + pagina + ".jpg", "map_example", pagina, coordinateD, boxP);
@@ -61,6 +46,6 @@
 	  });
 	  
 	</script>
-	
+
 </body>
 </html>

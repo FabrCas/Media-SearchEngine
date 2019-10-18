@@ -4,53 +4,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
 <title>IRS</title>
-<link rel="stylesheet" href=css/layout.css >
-
-
+<link rel="stylesheet" href=css/layout.css>
 </head>
-<body onLoad="controlloErrore()" >
-<p> Motore di ricerca:
-</p>
-<div id="1">
-<h2>
-Premi sotto per indicizzare i documenti
-</h2>
-<!-- <form id="indexing" th:action="@{/toIndex}" method="POST"> -->
 
+<body onLoad="controlloErrore()">
+	<p>Motore di ricerca:</p>
+	<div id="1">
+		<h2>Premi sotto per indicizzare i documenti</h2>
+		<button type="button" id="indexB">Indicizza</button>
+	</div>
+	
+	<div id="loading"></div>
+	
+	<br>
+	<br>
+	<form id="search_form" th:action="@{/toFind}" method="POST">
+		<label>Cerca <input id="search_input" size="30"
+			name="search_input" /></label>
+	</form>
 
-<button type="button" id="indexB">Indicizza</button>
-</div>
-<div id="loading"></div>
-<br>
+	<!-- inzio caricamento librerie  -->
+	<script type="text/javascript" src="/javaScript/jquery.min.js">
+	</script>
+	<script type="text/javascript" src="/javaScript/startIndexing.js">
+	</script>
+	<script type="text/javascript" src="/javaScript/controlloErrori.js">
+	</script>
+	<!--  fine caricamento librerie  -->
 
-<br>
-<form id="search_form" th:action="@{/toFind}" method="POST">
-	<label>Ricerca <input id="search_input" size="30" name="search_input" /></label>
-</form>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="/javaScript/startIndexing.js"></script>
-<script type="text/javascript" th:inline="javascript">
-//nessun errore, non legge la sintassi di thymeleaf
+<!-- script per la visualizzazione di errori nel caso di ricerca non valide -->
+	<script type="text/javascript" th:inline="javascript">
 var errorCode = [[${errorCode}]];
-
-function stampaErrore(){
-	if (errorCode==1){
-		window.alert("ricerca non valida: nessun carattere digitato");
-	}
-	if (errorCode==2){
-		window.alert("ricerca non valida: solo spazi");
-	}
-	if (errorCode==3){
-		window.alert("ricerca non valida: sintassi wildcard non permessa");
-	}
-}
-
-
-function controlloErrore(){
-	if(!(errorCode==0))
-		stampaErrore();
-}
+$(function(){
+	controlloErrore(errorCode);
+ });
 </script>
 
 </body>
