@@ -20,19 +20,21 @@ import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
 import it.uniroma3.IR.service.Interrogatore;
 
-
 @Controller
 public class MainController {
-	
+
 	@Autowired
 	private Indicizzatore indicizzatore;
-	
+
 	@Autowired
 	private Interrogatore interrogatore;
 
+	/*lista temporanea dei risulati, utili per la visualizzazione del documento*/
 	private List<RisultatoDoc> listaRisultatiC;
-	
-	//indicizzazione
+
+	/**
+	 * metodo per l'indicizzazione
+	 */
 	@RequestMapping(value="/Indexing")
 	@ResponseBody
 	public String toIndex() {
@@ -41,14 +43,22 @@ public class MainController {
 		return "Indicizzazione completata! \nSono stati indicizzati "+ this.indicizzatore.getCounterDocsIndexed()
 		+ " documenti.\n" + "Con un numero complessivo di trascrizioni pari a: "+this.indicizzatore.getLastId(); 
 	}
-	
-	//interrogazione
+
+	/**
+	 * metodo che effettua la ricerca 
+	 * @param ricerca
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/toFind", method= RequestMethod.POST)
 	public String toFind(@RequestParam("search_input") String ricerca, Model model) throws Exception{
 		this.interrogatore.ricercaFuzzy(ricerca);
 		if(this.interrogatore.isValida()) {
 			CreaRisultati risultati= this.interrogatore.getRisultati();
 			List<RisultatoDoc> listaRisultati=risultati.getRisultatiDocumenti();
+			
+			/*stampe*/
 			System.out.println(risultati.getTotaleHits());
 			for(RisultatoDoc ris: listaRisultati) {
 				System.out.println(ris.getTitolo());
@@ -57,6 +67,8 @@ public class MainController {
 					System.out.println(coordinate.toString());
 				}
 			}
+			
+			
 			Collections.sort(listaRisultati, new RisultatatoDocComparatore());
 			model.addAttribute("listaRisultati", listaRisultati);
 			this.listaRisultatiC=listaRisultati;
@@ -70,7 +82,9 @@ public class MainController {
 		}
 	}
 
-	
+	/**
+	 * metodo che mostra la pagina del documento selezionato
+	 */
 	@RequestMapping(value = "/toDocumento/{titolo}" , method = RequestMethod.GET) ///{titolo}")
 	public String getDocumento(@PathVariable ("titolo") String titolo,Model model) {
 		System.out.println("titolo del documento selezionato è:"+ titolo );
@@ -84,14 +98,20 @@ public class MainController {
 			}
 		}
 		return "documento.html";
-			
-		}
-	
+
+	}
+
+	/**
+	 * prima pagina da visualizzare
+	 */
 	@RequestMapping(value = { "/", "/index"})
 	public String index(Model model) {	
 		return "searchPage.html";
 	}
-	
+
+	/**
+	 * ritorno alla home page
+	 */
 	@RequestMapping("/home")
 	public String toHome(){
 		return "searchPage.html";

@@ -1,10 +1,10 @@
 package it.uniroma3.IR.model;
 
-/*
+/**
  * classe di modello per rappresentare i risultati per ogni documento
  * 
  * @see Box
- */
+ **/
 
 
 import java.util.ArrayList;

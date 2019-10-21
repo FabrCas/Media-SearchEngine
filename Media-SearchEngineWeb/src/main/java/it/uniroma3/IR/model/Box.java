@@ -1,10 +1,10 @@
 package it.uniroma3.IR.model;
 
-/*
+/**
  * Classe che modella le informazioni relative a un box,
  * quindi x, y, larghezza, altezza
  * 
- */
+ **/
 
 public class Box {
 	private Long x;
