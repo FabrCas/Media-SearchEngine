@@ -4,23 +4,69 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
 <title>IRS</title>
-<link rel="stylesheet" href=css/layout.css>
-</head>
+<!-- caricamento css -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/home.css">
 
-<body onLoad="controlloErrore()">
-	<p>Motore di ricerca:</p>
-	<div id="1">
-		<h2>Premi sotto per indicizzare i documenti</h2>
-		<button type="button" id="indexB">Indicizza</button>
-	</div>
+</head>
+<body onLoad="controlloErrore()" class="sfondo">
+
+<!-- inizio navigation bar -->
+
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">IRSystem</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+      <ul class="nav navbar-nav navbar-right">
+        <li><button type="button" id="indexB" class="btn btn-default navbar-btn">Indexing</button></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documents <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/visualizzaDocumento/040r">040r</a></li>
+            <li><a href="/visualizzaDocumento/040v">040v</a></li>
+            <li><a href="/visualizzaDocumento/041r">041r</a></li>
+            <li><a href="/visualizzaDocumento/041v">041v</a></li>
+            <li><a href="/visualizzaDocumento/042r">042r</a></li>
+            <li><a href="/visualizzaDocumento/042v">042v</a></li>
+            <li><a href="/visualizzaDocumento/043r">043r</a></li>
+            <li><a href="/visualizzaDocumento/043v">043v</a></li>
+            <li><a href="/visualizzaDocumento/044r">044r</a></li>
+            <li><a href="/visualizzaDocumento/044v">044v</a></li>
+            <li><a href="/visualizzaDocumento/050v">050v</a></li>
+            <li><a href="/visualizzaDocumento/100r">100r</a></li>
+            <li><a href="/visualizzaDocumento/150v">150v</a></li>
+            <li><a href="/visualizzaDocumento/200r">200r</a></li>    
+          </ul>
+        </li>
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- fine navigation bar -->
+	<div id="loading" class="lead"></div>
 	
-	<div id="loading"></div>
+	<form id="search_form" class="navbar-form navbar-left" role="search" th:action="@{/toFind}" method="POST">
 	
-	<br>
-	<br>
-	<form id="search_form" th:action="@{/toFind}" method="POST">
-		<label>Cerca <input id="search_input" size="30"
-			name="search_input" /></label>
+		<label class= "ricerca">
+		<div class="form-group">
+		<input id="search_input" size="30" class="form-control" placeholder="Cerca un documento"
+			name="search_input"/>
+			</div>
+			</label>
 	</form>
 
 	<!-- inzio caricamento librerie  -->
@@ -30,10 +76,13 @@
 	</script>
 	<script type="text/javascript" src="/javaScript/controlloErrori.js">
 	</script>
+	<script src="/javaScript/bootstrap.min.js">
+	</script>
 	<!--  fine caricamento librerie  -->
 
 <!-- script per la visualizzazione di errori nel caso di ricerca non valide -->
 	<script type="text/javascript" th:inline="javascript">
+	
 var errorCode = [[${errorCode}]];
 $(function(){
 	controlloErrore(errorCode);

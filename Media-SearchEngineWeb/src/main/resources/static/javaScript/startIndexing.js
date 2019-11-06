@@ -3,7 +3,7 @@ $(document).ready(function(){
 	    $.ajax({
 	      url : 'Indexing',
 	      beforeSend: function (){
-	    	  $("#loading").html("Indicizzazione in corso...");
+	    	  $("#loading").html("Indexing in progress, please wait...");
 	      },
 	      success: function (data){
 	        window.alert(data);

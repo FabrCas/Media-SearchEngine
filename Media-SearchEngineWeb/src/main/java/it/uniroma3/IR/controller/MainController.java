@@ -89,17 +89,24 @@ public class MainController {
 	public String getDocumento(@PathVariable ("titolo") String titolo,Model model) {
 		System.out.println("titolo del documento selezionato è:"+ titolo );
 		//ricerca risultati documento selezionato
-		for(RisultatoDoc risultato: this.listaRisultatiC) {
-			if(risultato.getTitolo().equals(titolo)) {
-				model.addAttribute("titolo", risultato.getTitolo());
-				model.addAttribute("nomeFile", risultato.getFile());
-				model.addAttribute("coordinateD", risultato.getCoordinateD());
-				model.addAttribute("boxP", risultato.getBoxP());
+			for(RisultatoDoc risultato: this.listaRisultatiC) {
+				if(risultato.getTitolo().equals(titolo)) {
+					model.addAttribute("titolo", risultato.getTitolo());
+					model.addAttribute("nomeFile", risultato.getFile());
+					model.addAttribute("coordinateD", risultato.getCoordinateD());
+					model.addAttribute("boxP", risultato.getBoxP());
+				}
 			}
-		}
-		return "documento.html";
-
+			return "documentoRicercato.html";
 	}
+	
+	@RequestMapping(value = "/visualizzaDocumento/{titolo}" , method = RequestMethod.GET) ///{titolo}")
+	public String visualizzaDocumento(@PathVariable ("titolo") String titolo,Model model) {
+		model.addAttribute("titolo", titolo);
+		return "documento.html";
+	}
+	
+	
 
 	/**
 	 * prima pagina da visualizzare
