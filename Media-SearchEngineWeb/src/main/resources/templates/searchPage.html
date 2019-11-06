@@ -6,14 +6,14 @@
 <title>IRS</title>
 <!-- caricamento css -->
 <link rel="stylesheet" href="/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body onLoad="controlloErrore()" class="sfondo">
 
 <!-- inizio navigation bar -->
 
-<nav class="navbar navbar-inverse navbar-static-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -57,6 +57,7 @@
 </nav>
 
 <!-- fine navigation bar -->
+
 	<div id="loading" class="lead"></div>
 	
 	<form id="search_form" class="navbar-form navbar-left" role="search" th:action="@{/toFind}" method="POST">

@@ -3,19 +3,11 @@
 	xmlns="http://www.w3.org/1999/html">
 <head>
 <meta charset="ISO-8859-1">
-<title>prova</title>
+<title>Doc</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 </head>
-<h1 id="id" th:text="${titolo}"></h1>
 <body id="body" class="body">
-	<div id="image_map">
-		<span> Documento: </span>
-		<!-- tag che verrà riempito con il documento da vizinfo.js -->
-
-	</div>
-	<div>
-		<h1>Ritorna alla home:</h1>
-		<a href="/home"> home </a>
-	</div>
 
 	<!-- inzio caricamento librerie  -->
 	<script type="text/javascript" src="/javaScript/jquery.min.js">
@@ -31,9 +23,66 @@
 	<script type="text/javascript"
 		src="/javaScript/gen_transcriptions_nodup.js">
   </script>
+  
+  	<script src="/javaScript/bootstrap.min.js">
+	</script>
 
 	<!-- fine caricamento librerie  -->
+	
+	<!-- inizio navigation bar -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">IRSystem</a>
+    </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="/home">Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documents <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/visualizzaDocumento/040r">040r</a></li>
+            <li><a href="/visualizzaDocumento/040v">040v</a></li>
+            <li><a href="/visualizzaDocumento/041r">041r</a></li>
+            <li><a href="/visualizzaDocumento/041v">041v</a></li>
+            <li><a href="/visualizzaDocumento/042r">042r</a></li>
+            <li><a href="/visualizzaDocumento/042v">042v</a></li>
+            <li><a href="/visualizzaDocumento/043r">043r</a></li>
+            <li><a href="/visualizzaDocumento/043v">043v</a></li>
+            <li><a href="/visualizzaDocumento/044r">044r</a></li>
+            <li><a href="/visualizzaDocumento/044v">044v</a></li>
+            <li><a href="/visualizzaDocumento/050v">050v</a></li>
+            <li><a href="/visualizzaDocumento/100r">100r</a></li>
+            <li><a href="/visualizzaDocumento/150v">150v</a></li>
+            <li><a href="/visualizzaDocumento/200r">200r</a></li>    
+          </ul>
+        </li>
+      </ul>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- fine navigation bar -->
+
+<h1 id="id" th:text="${titolo}"></h1>
+
+	<div id="image_map">
+	
+		<!-- tag che verrà riempito con il documento da vizinfo.js -->
+	</div>
+	
+	
 	<script type="text/javascript" th:inline="javascript">
 	
 	var pagina= [[${titolo}]];
