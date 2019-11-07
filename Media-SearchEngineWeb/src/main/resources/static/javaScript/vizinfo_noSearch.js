@@ -11,6 +11,8 @@ function createAreas(div_id, image_path, map_name) {
 
   var pagename = image_path.split('/')[2].split('.')[0]; /*prende page? */
   
+  window.scrollTo(100,100);
+  
   /*bbxs variabile in scripts/gen_transcriptions_nodup.js*/
   /*Il costruttore Object crea un oggetto avente il valore dato. Se il valore è
   null o undefined, verrà creato un oggetto vuoto; altrimenti un oggetto del tipo
@@ -60,8 +62,16 @@ function createAreas(div_id, image_path, map_name) {
     }
   );
 
+
+
   root_div.appendChild(map_ele);
   root_div.appendChild(img_ele);
+
+  console.log(abs_x);
+  console.log(abs_y);
+  $(img_ele).on("load", function() {
+	  window.scrollTo(abs_x, abs_y);
+  });
 }
 
 // $("area").filter( function(i){ return $(this).attr( "title" ).includes("latin") }).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');

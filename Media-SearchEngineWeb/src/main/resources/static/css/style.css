@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
 }
 .sfondo{
-	background-image:url(vaticano.jpg);
+	background-image:url(/images/vaticano.jpg);
 	background-size: cover;
 	background-attachment: fixed;
 }

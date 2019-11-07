@@ -27,8 +27,6 @@ function createAreasHit(div_id, image_path, map_name, page_name, coordD, coordP 
   var abs_x = pagekey.x;  //Number() costrutor, number-> numeric data typer 64 bit
   /*ottengo la posizione x dell' area di testo*/
   var abs_y = pagekey.y;
-  console.log("x doc: "+abs_x);
-  console.log("y doc: "+abs_y);
  //ottengo oggetto contenente le coppie chiave valore dei box in cui c'è stato matching
   var page_bbxs = coordP;
   
@@ -68,6 +66,8 @@ var lunghezza= page_bbxs.length;
 
 
   createAreas(root_div, image_path,img_ele, map_ele);
+
+  window.scrollTo(abs_x, abs_y);
 }
 
 // $("area").filter( function(i){ return $(this).attr( "title" ).includes("latin") }).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');
@@ -79,7 +79,6 @@ function createAreas(root_div, image_path, img_ele, map_ele) {
 	  //img_ele.classList.add('mapHit');
 
 	  var pagename = image_path.split('/')[2].split('.')[0]; /*prende page? */
-	  console.log(pagename);
 	  /*bbxs variabile in scripts/gen_transcriptions_nodup.js*/
 	  /*Il costruttore Object crea un oggetto avente il valore dato. Se il valore è
 	  null o undefined, verrà creato un oggetto vuoto; altrimenti un oggetto del tipo
@@ -124,7 +123,6 @@ function createAreas(root_div, image_path, img_ele, map_ele) {
 	  #->primo elemento*/
 	      area_ele.href = "#";
 	      area_ele.title = page_bbxs[k];
-	      console.log(area_ele);
 	    //  $.maphilight.defaults;
 	    $(area_ele).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');
 	     map_ele.appendChild(area_ele);
@@ -134,6 +132,7 @@ function createAreas(root_div, image_path, img_ele, map_ele) {
 
 	  root_div.appendChild(map_ele);
 	  root_div.appendChild(img_ele);
+	  
 	}
 
 	// $("area").filter( function(i){ return $(this).attr( "title" ).includes("latin") }).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');
