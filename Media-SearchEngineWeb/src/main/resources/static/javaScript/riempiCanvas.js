@@ -20,9 +20,12 @@ function riempiCanvas(titolo, indice, box, testo, images){
 			}
 		}
 		imageCor= getImage();
-
+		imageCor.classList.add('mapHit');
+		
+		
+		
 		var y= box.y + testo.y;
-		var x= testo.x;
+		var x= testo.x; 
 		//var larghezza= testo.width;
 		//var altezza= box.height + 5 ; //margine per righe poco dritte
 
@@ -32,6 +35,13 @@ function riempiCanvas(titolo, indice, box, testo, images){
 			y= y+35;
 		}
 
-		ctx.drawImage(imageCor, -(x+90) , -y);
+		ctx.drawImage(imageCor, -x , -y);  //aggiungere 90 a x per box con margini ampi
+		evidenzia(ctx, box, testo);
 	});
+}
+
+
+function evidenzia(ctx,box, testo){
+	ctx.fillStyle = 'rgba(225,255,0,0.5)';;
+	ctx.fillRect(box.x, 0, box.width, 50);
 }

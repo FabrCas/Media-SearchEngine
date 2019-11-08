@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="EN" xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/html">
 <head>
 <meta charset="ISO-8859-1">
@@ -15,7 +15,7 @@
 
 	<script type="text/javascript" src="/javaScript/caricaMedia.js">
 	</script>
-
+	
 	<script type="text/javascript" src="/javaScript/riempiCanvas.js">
 	</script>
 	
@@ -77,21 +77,20 @@
 	</script>
 	
 	
-	<h1>Search Results:</h1>
+	<h1 class="">Search Results:</h1>
 	<span th:text="${hits}" class="lead"></span>
 	<br>
 	<section th:each="risultatoDoc, stat: ${listaRisultati}">
 		<h4>
 			<a th:href="@{'/toDocumento' + '/' + ${risultatoDoc.titolo}}"
-				th:text="${risultatoDoc.titolo}"> titolo</a> <span
-				th:text="${risultatoDoc.score}"> Score </span> <span
-				th:text="${risultatoDoc.coordinateD}"> </span>
-
+				th:text="${risultatoDoc.titolo}" class="elenco withBackgroung lead"> titolo</a> 
+				
 			<ul style="list-style-type: none;">
 				<li th:each="coordinata, stat: ${risultatoDoc.boxP}">
 					<div>
 						<canvas th:id="${stat.index} + ${risultatoDoc.titolo}"
-							style="border: 1px solid; width: 1200px; height: 50px;"> your browser doesn't support the canvas tag
+							style="border: 1px solid; width: 1500px; height: 50px;"
+							 class="thumbnail"> your browser doesn't support the canvas tag
 							</canvas>
 
 						<script type="text/javascript" th:inline="javascript">
@@ -105,11 +104,6 @@
 		riempiCanvas(titolo, indice, box, testo, images);
 		
 		</script>
-						<span th:text="${risultatoDoc.titolo}"> nome file </span> <span
-							th:text="'|x: '+${coordinata.x} +'|' "> x </span> <span
-							th:text="'|y: '+ ${coordinata.y} +'|'"> y </span> <span
-							th:text="'|w: '+ ${coordinata.width} +'|'"> w </span> <span
-							th:text="'|h: '+ ${coordinata.height} +'|'"> h </span>
 					</div>
 				</li>
 			</ul>

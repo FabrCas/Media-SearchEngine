@@ -4,11 +4,30 @@
     top: 50%;
     transform: translate(-50%, -50%);
 }
-.sfondo{
+.sfondo1{
 	background-image:url(/images/vaticano.jpg);
 	background-size: cover;
 	background-attachment: fixed;
 }
+.sfondo2{
+	background-image:url(/images/cartaAntica.jpg);
+	background-size: cover;
+	background-attachment: fixed;
+	padding-left: 20px;
+}
+.elenco{
+	padding-left: 40px;
+}
 body{
 	padding-top: 50px;
 }
+.withBackgroung{
+	color: DarkBlue;
+	font-weight: bold;
+}
+
+.withBackgroung2{
+	color: White;
+	font-weight: bold;
+}
+

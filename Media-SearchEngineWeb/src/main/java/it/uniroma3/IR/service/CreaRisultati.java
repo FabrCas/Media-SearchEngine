@@ -49,7 +49,7 @@ public class CreaRisultati {
 	 * dei riscontri
 	 */
 	public String getTotaleHits() {
-		return "numero di documenti in cui ci sono stati riscontri per [" + this.termineRicercato
+		return "number of documents for the research of [" + this.termineRicercato
 				+ "]: " + this.mappingRisultatiPerNomeDoc.keySet().size()+ "\n";
 	} 
 

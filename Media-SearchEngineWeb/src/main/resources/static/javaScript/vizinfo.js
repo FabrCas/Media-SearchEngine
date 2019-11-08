@@ -35,6 +35,7 @@ function createAreasHit(div_id, image_path, map_name, page_name, coordD, coordP 
     "xBoxParola_yBoxParola_larghezzaBoxParola_altezzaBoxParola": "trascrizione1\ntrascrizione2\ntrascrizione3",
 */
 var i;
+var ys;
 var lunghezza= page_bbxs.length;
   for(i=0; i< lunghezza; i++){
 
@@ -44,6 +45,7 @@ var lunghezza= page_bbxs.length;
       var y1 = page_bbxs[i].y + abs_y;
       var x2 = x1 + page_bbxs[i].width;
       var y2 = y1 + page_bbxs[i].height ;  //angolo opposto all'origine
+      ys= y2;
       
       /*creo un nuovo tag <area> con i valori trovati*/
       // il tag area permette di definire nuove aree per image map
@@ -66,8 +68,8 @@ var lunghezza= page_bbxs.length;
 
 
   createAreas(root_div, image_path,img_ele, map_ele);
-
-  window.scrollTo(abs_x, abs_y);
+  
+  window.scrollTo(abs_x, ys);
 }
 
 // $("area").filter( function(i){ return $(this).attr( "title" ).includes("latin") }).data('maphilight', {alwaysOn: false}).trigger('alwaysOn.maphilight');
