@@ -19,6 +19,7 @@ import it.uniroma3.IR.model.RisultatoDoc;
 import it.uniroma3.IR.service.CreaRisultati;
 import it.uniroma3.IR.service.Indicizzatore;
 import it.uniroma3.IR.service.Interrogatore;
+import it.uniroma3.PrecisionRecall.CalcolatorePrecisionRecall;
 
 @Controller
 public class MainController {
@@ -29,6 +30,9 @@ public class MainController {
 	@Autowired
 	private Interrogatore interrogatore;
 
+	@Autowired
+	private CalcolatorePrecisionRecall calcolatorePR;
+	
 	/*lista temporanea dei risulati, utili per la visualizzazione del documento*/
 	private List<RisultatoDoc> listaRisultatiC;
 
