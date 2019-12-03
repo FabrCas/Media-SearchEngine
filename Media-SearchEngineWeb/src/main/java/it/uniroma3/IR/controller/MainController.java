@@ -115,8 +115,10 @@ public class MainController {
 	/**
 	 * prima pagina da visualizzare
 	 */
+	
 	@RequestMapping(value = { "/", "/index"})
 	public String index(Model model) {	
+		this.Prova();
 		return "searchPage.html";
 	}
 
@@ -124,8 +126,12 @@ public class MainController {
 	 * ritorno alla home page
 	 */
 	@RequestMapping("/home")
-	public String toHome(){
+	public String toHome(){	
 		return "searchPage.html";
+	}
+	
+	private void Prova() {
+		System.out.println("prova!");
 	}
 
 }
