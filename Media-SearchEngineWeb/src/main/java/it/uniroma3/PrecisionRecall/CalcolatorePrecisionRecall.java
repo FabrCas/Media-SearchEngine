@@ -61,21 +61,28 @@ public class CalcolatorePrecisionRecall {
 		i++;
 	}
 		double avgP = this.getPrecisionAVG();
+		double avgR = this.getRecallAVG();
 		System.out.println("precisione media: "+ avgP);
+		System.out.println("Recall media: "+ avgR);
 	}
 	
 	private void calcola(double tp, int size) {
 
 		double fp = size - tp; 
 //		double fn = relevantDocumentCount - tp; // false
-		double precision;
-		if ((tp+fp)==0)
-			precision=0;
-		else
-			precision = tp / (tp + fp);
+		double fn;
 		
-//		double recall = tp / (tp + fn);
-		double recall= 0;
+		double precision;
+		if (tp==0) {
+			precision=0;
+			fn= 1;
+		}
+		else {
+			precision = tp / (tp + fp);
+			fn= 0;
+		}
+		
+		double recall = tp / (tp + fn);
 		
 		PrecisionRecall precisionRecall = new PrecisionRecall(precision, recall);	
 		this.risultatiPR.add(precisionRecall);
@@ -110,10 +117,20 @@ public class CalcolatorePrecisionRecall {
 		double nValoriPrecision = this.risultatiPR.size();
 		double accumulatore= 0;
 		for(PrecisionRecall pr:  this.risultatiPR) {
-			System.out.println("p-------> "+pr.getPrecision());
+			System.out.println("P-------> "+pr.getPrecision());
 			accumulatore += pr.getPrecision();
 		}
 		return accumulatore/nValoriPrecision;
+	}
+	
+	public double getRecallAVG() {
+		double nValoriRecall = this.risultatiPR.size();
+		double accumulatore= 0;
+		for(PrecisionRecall pr:  this.risultatiPR) {
+			System.out.println("R-------> "+pr.getRecall());
+			accumulatore += pr.getRecall();
+		}
+		return accumulatore/nValoriRecall;
 	}
 	
 	
