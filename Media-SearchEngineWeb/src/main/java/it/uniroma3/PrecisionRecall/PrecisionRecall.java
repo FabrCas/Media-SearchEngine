@@ -9,4 +9,13 @@ public class PrecisionRecall {
 		this.precision = precision;
 		this.recall = recall;
 	}
+	
+	public double getPrecision() {
+		return precision;
+	}
+
+	public double getRecall() {
+		return recall;
+	}
+
 }
