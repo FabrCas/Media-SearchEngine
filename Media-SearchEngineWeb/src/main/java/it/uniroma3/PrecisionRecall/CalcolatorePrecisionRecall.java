@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.springframework.stereotype.Component;
@@ -24,17 +25,17 @@ public class CalcolatorePrecisionRecall {
 	private List<PrecisionRecall> risultatiPR;
 	private int tempSize;
 	private GroundTruth gd;
-	
+	private Map<String, Integer> occorrenzeGT;
 	
 	public CalcolatorePrecisionRecall() throws Exception {
 		this.gd= new GroundTruth();
+		occorrenzeGT= this.gd.getOccorrenze();
 		this.queries= new ArrayList<String>();
 		this.risultatiPR= new ArrayList<PrecisionRecall>();
-		//this.CaricaParole();
+		this.CaricaParole();
 		this.interrogatore= new Interrogatore();
-		//this.generaRisultati();
+		this.generaRisultati();
 	}
-	
 	
 	private void CaricaParole() throws IOException {
 		File file= new File(WORDS_PATH);
@@ -55,10 +56,17 @@ public class CalcolatorePrecisionRecall {
 		System.out.println("*****************Stato: "+ i +"/100 ****************************************" );
 		this.interrogatore.ricercaFuzzy(q);
 		CreaRisultati risultati = this.interrogatore.getRisultati();
+		
+		double documentiRilevanti;
+		if((this.occorrenzeGT.get(q))==null)
+			documentiRilevanti=0;
+		else
+			documentiRilevanti= this.occorrenzeGT.get(q).doubleValue();	
+		
 		List<RisultatoDoc> listaRisultati= risultati.getRisultatiDocumenti();
-		double tp= VerificaTruePositive(listaRisultati, q);
+		double tp= VerificaTruePositive(listaRisultati, q,documentiRilevanti );
 		int size= this.tempSize;
-		this.calcola(tp,size);
+		this.calcola(tp,size, q, documentiRilevanti);
 		System.out.println("size: "+ size + " tp: "+ tp);
 		i++;
 	}
@@ -68,29 +76,28 @@ public class CalcolatorePrecisionRecall {
 		System.out.println("Recall media: "+ avgR);
 	}
 	
-	private void calcola(double tp, int size) {
-
+	private void calcola(double tp, int size, String query, double documentiRilevanti) {
+		
+		System.out.println("docRil: "+ documentiRilevanti);
 		double fp = size - tp; 
-//		double fn = relevantDocumentCount - tp; // false
-		double fn;
+		double fn = documentiRilevanti - tp; 
 		
 		double precision;
+		/*per evitare divisione per 0*/
 		if (tp==0) {
 			precision=0;
-			fn= 1;
 		}
 		else {
-			precision = tp / (tp + fp);
-			fn= 0;
+		precision = tp / (tp + fp);
 		}
 		
 		double recall = tp / (tp + fn);
 		
-		PrecisionRecall precisionRecall = new PrecisionRecall(precision, recall);	
+		PrecisionRecall precisionRecall = new PrecisionRecall(precision, recall, query);	
 		this.risultatiPR.add(precisionRecall);
 	}
 	
-	private double VerificaTruePositive(List<RisultatoDoc> listaRisultati, String QueryAttuale) {
+	private double VerificaTruePositive(List<RisultatoDoc> listaRisultati, String QueryAttuale, double documentiRilevanti) {
 		System.out.println("vtp, queryAttuale: "+ QueryAttuale);
 		this.tempSize=0;
 		double tp= 0;
@@ -103,7 +110,6 @@ public class CalcolatorePrecisionRecall {
 				boolean trovato= false;
 				while(scanner.hasNext() && !(trovato)) {
 					String trascrizioneN= scanner.next();
-					//System.out.println("trascrizione "+ tempSize +" : "+ trascrizioneN);
 					if(trascrizioneN.equals(QueryAttuale)) {
 						tp++;
 						trovato=true;
@@ -112,13 +118,18 @@ public class CalcolatorePrecisionRecall {
 				scanner.close();
 			}
 		}
+		if (tp> documentiRilevanti)
+			tp= documentiRilevanti;
 		return tp;
 	}
+	
 	
 	public double getPrecisionAVG() {
 		double nValoriPrecision = this.risultatiPR.size();
 		double accumulatore= 0;
 		for(PrecisionRecall pr:  this.risultatiPR) {
+			System.out.println("************************************");
+			System.out.println("Q: "+ pr.getQuery());
 			System.out.println("P-------> "+pr.getPrecision());
 			System.out.println("R-------> "+pr.getRecall());
 			accumulatore += pr.getPrecision();

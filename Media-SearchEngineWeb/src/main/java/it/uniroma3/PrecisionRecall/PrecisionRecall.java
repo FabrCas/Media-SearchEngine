@@ -4,10 +4,12 @@ public class PrecisionRecall {
 
 	public double precision;
 	public double recall;
+	public String query;
 
-	public PrecisionRecall(double precision, double recall) {
+	public PrecisionRecall(double precision, double recall, String query) {
 		this.precision = precision;
 		this.recall = recall;
+		this.query= query;
 	}
 	
 	public double getPrecision() {
@@ -16,6 +18,10 @@ public class PrecisionRecall {
 
 	public double getRecall() {
 		return recall;
+	}
+	
+	public String getQuery() {
+		return this.query;
 	}
 
 }

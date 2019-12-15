@@ -18,7 +18,7 @@ public class GroundTruth {
 	public GroundTruth() throws FileNotFoundException {
 		this.occorrenzeGT= new HashMap<String, Integer>();
 		this.calcolaOccorrenze();
-		this.stampa();
+		//this.stampa();
 	}
 	
 	private void calcolaOccorrenze() throws FileNotFoundException {
@@ -44,20 +44,46 @@ public class GroundTruth {
 		sc.useDelimiter(" ");
 		while(sc.hasNext()) {
 			String parola = sc.next().toLowerCase().trim();  //cancella spazi e upCase per unificare occorrenze
-			if (parola.contains("\n")) {
+			if (parola.contains("\n") ) {
 				String [] parole = parola.split("\n");
 				String nuovaparola1 = parole[0];
 				nuovaparola1= nuovaparola1.replace("\n", "").replace("\r", "");
 				String nuovaparola2 = parole[1];
-				this.inserisciParola(nuovaparola1);
-				this.inserisciParola(nuovaparola2);
+				this.inserisciParola(this.ripulisci(nuovaparola1));
+				this.inserisciParola(this.ripulisci(nuovaparola2));
 				}
 			else {
-				this.inserisciParola(parola);
+				this.inserisciParola(this.ripulisci(parola));
 			}
 		}
 		sc.close();
 	}
+	
+	private String ripulisci(String parola) {
+		String nuovaparola= parola;
+		nuovaparola =nuovaparola.replaceAll( "\\(.*?\\)|\\'.*?\\'|\\[.*?\\]|\\{.*?\\}", "");
+		nuovaparola= nuovaparola.replace("v", "u");
+		nuovaparola= nuovaparola.replace("j", "i");
+		nuovaparola= nuovaparola.replace("r(um)", "rum");
+		nuovaparola=nuovaparola.replace("p(er)", "per");
+		nuovaparola=nuovaparola.replace("p(ro)", "pro");
+		nuovaparola=nuovaparola.replace("q(ui)", "qui");
+		nuovaparola=nuovaparola.replace("q(ue)", "que");
+		nuovaparola=nuovaparola.replace("b(us)", "bus");
+		nuovaparola=nuovaparola.replace("(rum)", "rum");
+		nuovaparola=nuovaparola.replace("(per)", "per");
+		nuovaparola=nuovaparola.replace("(pro)", "pro");
+		nuovaparola=nuovaparola.replace("(qui)", "qui");
+		nuovaparola=nuovaparola .replace("(que)", "que");
+		nuovaparola=nuovaparola.replace("(bus)", "bus");
+		nuovaparola=nuovaparola.replace("(con)", "con");
+		nuovaparola=nuovaparola.replace("(et)", "et");
+		nuovaparola=nuovaparola.replace("-", "");
+		nuovaparola=nuovaparola.replace(",", "");
+		nuovaparola=nuovaparola.replace(".", "");
+		return nuovaparola;
+	}
+	
 	
 	public Map<String,Integer> getOccorrenze() {
 		return this.occorrenzeGT;
