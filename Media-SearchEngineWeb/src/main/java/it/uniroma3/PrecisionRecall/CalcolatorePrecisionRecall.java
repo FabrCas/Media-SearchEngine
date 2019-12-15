@@ -23,14 +23,16 @@ public class CalcolatorePrecisionRecall {
 	private List<String> queries;
 	private List<PrecisionRecall> risultatiPR;
 	private int tempSize;
+	private GroundTruth gd;
 	
 	
 	public CalcolatorePrecisionRecall() throws Exception {
+		this.gd= new GroundTruth();
 		this.queries= new ArrayList<String>();
 		this.risultatiPR= new ArrayList<PrecisionRecall>();
-		this.CaricaParole();
+		//this.CaricaParole();
 		this.interrogatore= new Interrogatore();
-		this.generaRisultati();
+		//this.generaRisultati();
 	}
 	
 	
@@ -118,6 +120,7 @@ public class CalcolatorePrecisionRecall {
 		double accumulatore= 0;
 		for(PrecisionRecall pr:  this.risultatiPR) {
 			System.out.println("P-------> "+pr.getPrecision());
+			System.out.println("R-------> "+pr.getRecall());
 			accumulatore += pr.getPrecision();
 		}
 		return accumulatore/nValoriPrecision;
@@ -127,7 +130,6 @@ public class CalcolatorePrecisionRecall {
 		double nValoriRecall = this.risultatiPR.size();
 		double accumulatore= 0;
 		for(PrecisionRecall pr:  this.risultatiPR) {
-			System.out.println("R-------> "+pr.getRecall());
 			accumulatore += pr.getRecall();
 		}
 		return accumulatore/nValoriRecall;
